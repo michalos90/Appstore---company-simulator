@@ -2,15 +2,16 @@ package Company;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-
+import java.util.Calendar;
 
 public class Day {
-    LocalDate day = LocalDate.of(2020, 1, 1);
+    LocalDate day = LocalDate.of(2020, 1, 3);
+
     DayOfWeek dayOfWeek = day.getDayOfWeek();
     LocalDate conctractDay;
 
     public void Today() {
-        System.out.println("Local date #2: " + day + " " + dayOfWeek);
+        System.out.println("Hello Today is  " + day + " " + dayOfWeek);
     }
 
 
@@ -20,7 +21,26 @@ public class Day {
     }
 
     public void viewDate(LocalDate date) {
-        System.out.println("Local date #2: " + date);
+        System.out.println(date);
+    }
+
+    public DayOfWeek getDay() {
+
+        return this.day.getDayOfWeek();
+    }
+    public void workTime(){
+        System.out.println("Today is: "+this.day.getDayOfWeek());
+        if(this.day.getDayOfWeek().getValue()<=5)
+        {
+            System.out.println("Today is:");
+
+        }
+        else
+        {
+            System.out.println("No spoko");
+        }
+
+
     }
 
 }
