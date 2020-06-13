@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Appstore---company-simulator.iml" filepath="$PROJECT_DIR$/Appstore---company-simulator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Pragram/Pragram.iml" filepath="$PROJECT_DIR$/Pragram/Pragram.iml" />
+    </modules>
+  </component>
+</project>
