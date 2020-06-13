@@ -1,6 +1,10 @@
 package Company.Human;
 
-public class Human {
+import Company.CreateRandom;
+
+public class Human extends CreateRandom {
     String firstName;
     String lastName;
+
+
 }
