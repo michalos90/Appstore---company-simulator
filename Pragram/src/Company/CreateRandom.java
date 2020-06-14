@@ -10,152 +10,179 @@ public class CreateRandom {
         return generator.nextInt(number);
     }
 
-    public String createRandomLastName(Integer number) {
-        String value = "";
-        switch (randomInt(number)) {
+    public String generateLastName() {
+        String generatedRandomName = "";
+        switch (randomInt(11)) {
             case 1:
-                value = "Smith";
+                generatedRandomName = "Smith";
                 break;
             case 2:
-                value = "Jones ";
+                generatedRandomName = "Jones ";
                 break;
             case 3:
-                value = "Williams ";
+                generatedRandomName = "Williams ";
                 break;
             case 4:
-                value = "Taylor ";
+                generatedRandomName = "Taylor ";
                 break;
             case 5:
-                value = "Davies ";
+                generatedRandomName = "Davies ";
                 break;
             case 6:
-                value = "Evans ";
+                generatedRandomName = "Evans ";
                 break;
             case 7:
-                value = "Thomas ";
+                generatedRandomName = "Thomas ";
                 break;
             case 8:
-                value = "Johnson ";
+                generatedRandomName = "Johnson ";
                 break;
             case 9:
-                value = "Roberts ";
+                generatedRandomName = "Roberts ";
                 break;
             case 10:
-                value = "Walker ";
+                generatedRandomName = "Walker ";
                 break;
             case 11:
-                value = "Thompson ";
+                generatedRandomName = "Thompson ";
                 break;
             default:
-                value = "Edwards ";
+                generatedRandomName = "Edwards ";
 
         }
 
 
-        return value;
+        return generatedRandomName;
     }
 
-    public String createRandomName(Integer number) {
-        String value = "";
-        switch (randomInt(number)) {
+    public String generateName() {
+        String generatedRandomName = "";
+        switch (randomInt(11)) {
             case 1:
-                value = "Michael";
+                generatedRandomName = "Michael";
                 break;
             case 2:
-                value = "George";
+                generatedRandomName = "George";
                 break;
             case 3:
-                value = "John";
+                generatedRandomName = "John";
                 break;
             case 4:
-                value = "Charles";
+                generatedRandomName = "Charles";
                 break;
             case 5:
-                value = "David";
+                generatedRandomName = "David";
                 break;
             case 6:
-                value = "Donald";
+                generatedRandomName = "Donald";
                 break;
             case 7:
-                value = "Julie";
+                generatedRandomName = "Julie";
                 break;
             case 8:
-                value = "Caroline";
+                generatedRandomName = "Caroline";
                 break;
             case 9:
-                value = "Natalee";
+                generatedRandomName = "Natalee";
                 break;
             case 10:
-                value = "Sheryl";
+                generatedRandomName = "Sheryl";
                 break;
             case 11:
-                value = "Samantha";
+                generatedRandomName = "Samantha";
                 break;
             default:
-                value = "Andrew";
+                generatedRandomName = "Andrew";
 
         }
-        return value;
+        return generatedRandomName;
     }
 
-    public Integer createRandomType() {
+    public Integer generateType() {
 
-        Integer value = 0;
+        Integer generatedType = 0;
 
 
-        Integer randomNumber=randomInt(99);
+        Integer randomNumber = randomInt(99);
         if (randomNumber <= 33 && randomNumber >= 1) {
-            value = 1;
+            generatedType = 1;
         }
         if (randomNumber <= 66 && randomNumber >= 34) {
-            value = 2;
+            generatedType = 2;
         }
         if (randomNumber <= 99 && randomNumber >= 67) {
-            value = 3;
+            generatedType = 3;
         }
-        return value;
+        return generatedType;
     }
-    public String createRandomProjectName(Integer number) {
-        String value = "";
-        switch (randomInt(number)) {
+
+    public String generateProjectName() {
+        String generatedProjectName = "";
+        switch (randomInt(11)) {
             case 1:
-                value = "Project X";
+                generatedProjectName = "Project X";
                 break;
             case 2:
-                value = "The Best Game";
+                generatedProjectName = "The Best Game";
                 break;
             case 3:
-                value = "The Simple app";
+                generatedProjectName = "The Simple app";
                 break;
             case 4:
-                value = "Just a Game";
+                generatedProjectName = "Just a Game";
                 break;
             case 5:
-                value = "App For Company";
+                generatedProjectName = "App For Company";
                 break;
             case 6:
-                value = "Helpfully app";
+                generatedProjectName = "Helpfully app";
                 break;
             case 7:
-                value = "Jarvis";
+                generatedProjectName = "Jarvis";
                 break;
             case 8:
-                value = "Just an app";
+                generatedProjectName = "Just an app";
                 break;
             case 9:
-                value = "Remote App";
+                generatedProjectName = "Remote App";
                 break;
             case 10:
-                value = "Private App";
+                generatedProjectName = "Private App";
                 break;
             case 11:
-                value = "Nothing";
+                generatedProjectName = "Nothing";
                 break;
             default:
-                value = "Telephone app";
+                generatedProjectName = "Learning app";
 
         }
-        return value;
+        return generatedProjectName;
+    }
+
+    public String generateProjectSkill() {
+
+        String generatedSkill = "wordpress";
+        switch (randomInt(6)) {
+            case 1:
+                generatedSkill = "front-end";
+                break;
+            case 2:
+                generatedSkill = "backend";
+                break;
+            case 3:
+                generatedSkill = "database";
+                break;
+            case 4:
+                generatedSkill = "wordpress";
+                break;
+            case 5:
+                generatedSkill = "prestashop";
+                break;
+            case 6:
+                generatedSkill = "mobile";
+                break;
+        }
+        return generatedSkill;
     }
 
 

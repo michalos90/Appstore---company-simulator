@@ -22,18 +22,40 @@ public class Client extends Human {
 
     }
 
-
-    public void createRandomList() {
-        for (int i = 0; i < 33; i++) {
-            clientList.add(new Client(firstName = createRandomName(11),
-                    lastName = createRandomLastName(11),
-                    clientId = i,
-                    type = createRandomType()));
-        }
-        for (Client client : clientList) {
-            System.out.println(client.firstName);
+    public void checkClientList() {
+        if (clientList.size() == 0) {
+            generateList();
         }
     }
 
+    public void generateList() {
+        for (int i = 0; i <= 33; i++) {
+            clientList.add(new Client(firstName = generateName(),
+                    lastName = generateLastName(),
+                    clientId = i,
+                    type = generateType()));
+        }
+
+    }
+
+    public String getNameClientFromList(Integer id) {
+        String value = "";
+        for (Client client : clientList) {
+            if (id == client.clientId) {
+                value = client.firstName;
+            }
+        }
+        return value;
+    }
+
+    public Integer getTypeFromList(Integer id) {
+        Integer value = 0;
+        for (Client client : clientList) {
+            if (id == client.clientId) {
+                value = client.type;
+            }
+        }
+        return value;
+    }
 
 }

@@ -1,7 +1,7 @@
 package Company;
 
-import Company.Human.Client;
 import Company.Human.Player;
+import Company.Project.Project;
 
 
 public class Main {
@@ -13,8 +13,59 @@ public class Main {
         day.setConctractDay(10, 6, 2020);
         day.viewDate(day.conctractDay);
         day.workTime();
-        Client client = new Client();
-        client.createRandomList();
+        Project project = new Project();
+project.generateListOfProject();
+
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+project.generateListOfProject();
+        project.showListOfProject();
 
 
     }

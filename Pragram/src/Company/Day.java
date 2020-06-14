@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.Calendar;
 
 public class Day {
-    LocalDate day = LocalDate.of(2020, 1, 3);
+    LocalDate day = LocalDate.of(2020, 1, 1);
     Integer playedDays=1;
     Integer lookingForDays=0;
 

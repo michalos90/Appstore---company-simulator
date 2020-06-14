@@ -10,7 +10,7 @@ public class Player extends Programer {
     public Player(String name, String surname) {
         this.firstName = name;
         this.lastName = surname;
-        this.skills = new String[7];
+        this.skills = new String[5];
         this.skills[0] = "front-end";
         this.skills[1] = "backend";
         this.skills[2] = "database";
