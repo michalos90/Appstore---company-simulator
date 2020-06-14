@@ -162,7 +162,7 @@ public class CreateRandom {
     public String generateProjectSkill() {
 
         String generatedSkill = "wordpress";
-        switch (randomInt(6)) {
+        switch (randomInt(7)) {
             case 1:
                 generatedSkill = "front-end";
                 break;

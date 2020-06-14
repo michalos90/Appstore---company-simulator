@@ -73,7 +73,7 @@ public class Project extends CreateRandom {
 
     public void generateListOfProject() {
         client.checkClientList();
-        skillAndDays.createSkillAndDaysList(2);
+        skillAndDays.createSkillAndDaysList(6);
 
         Integer number = randomInt(33);
         Integer mDays = skillAndDays.getDaysFromList() - skillAndDays.getDaysFromList() * randomInt(25) / 100;

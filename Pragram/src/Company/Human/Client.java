@@ -7,7 +7,6 @@ public class Client extends Human {
     Integer type;
     Integer clientId;
 
-
     public Client(String name, String nLastName, Integer nClientId, Integer nType) {
         this.firstName = name;
         this.lastName = nLastName;

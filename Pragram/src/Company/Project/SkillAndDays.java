@@ -8,6 +8,7 @@ import java.util.List;
 public class SkillAndDays extends CreateRandom {
     String skill;
     Integer days;
+    List<SkillAndDays> skillAndDaysList = new LinkedList<>();
 
     public SkillAndDays(String nSkill, Integer nDays) {
         this.skill = nSkill;
@@ -18,18 +19,26 @@ public class SkillAndDays extends CreateRandom {
 
     }
 
-            List<SkillAndDays> skillAndDaysList = new LinkedList<>();
-
     public void createSkillAndDaysList(int number) {
-        if (skillAndDaysList.size()!=0){
-skillAndDaysList.clear();
+        if (skillAndDaysList.size() != 0) {
+            skillAndDaysList.clear();
         }
-        for(int i = 0;i<number;i++)
-        skillAndDaysList.add(new SkillAndDays(generateProjectSkill(), randomInt(100)));
 
+        for (int i = 0; i < number; i++) {
+            if (skillAndDaysList.size() == 0) {
+                skillAndDaysList.add(new SkillAndDays(generateProjectSkill(), randomInt(100)));
+            } else {
+                String value;
+                do {
+                    value = generateProjectSkill();
+                } while (generateUniqueSkills(value) == true);
+                skillAndDaysList.add(new SkillAndDays(value, randomInt(100)));
+            }
+
+
+        }
     }
 
-    //   public void showList(){        for(int i =0;i<skillAndDaysList.size();i++)        {            System.out.println(skillAndDaysList); } }
     public List<SkillAndDays> copyList() {
         return skillAndDaysList;
     }
@@ -63,7 +72,26 @@ skillAndDaysList.clear();
         return value;
     }
 
-    public List<SkillAndDays> getDayFromTab (SkillAndDays[] tab){
+    public boolean generateUniqueSkills(String skill) {
+        boolean value = false;
+        for (SkillAndDays items : skillAndDaysList) {
+            if (items.skill == skill) {
+                value = true;
+            }
+        }
+        return value;
+    }
+
+    public SkillAndDays[] returSkillAndDays() {
+        SkillAndDays[] TempTab = new SkillAndDays[6];
+        for (int i = 0; i < skillAndDaysList.size(); i++) {
+            TempTab[i] = skillAndDaysList.get(i);
+
+        }
+        return TempTab;
+    }
+
+    public List<SkillAndDays> getDayFromTab(SkillAndDays[] tab) {
 
         List<SkillAndDays> TempList = new LinkedList<>();
 
@@ -71,26 +99,22 @@ skillAndDaysList.clear();
 
     }
 
-
-
     public void clearList() {
         skillAndDaysList.clear();
     }
 
-    public void showList(List<SkillAndDays> list){
-        for(SkillAndDays items: list)
-        {
-            System.out.println(items.days+items.skill);
+    public void showList(List<SkillAndDays> list) {
+        for (SkillAndDays items : list) {
+            System.out.println(items.days + items.skill);
         }
 
     }
 
-    public SkillAndDays[] ListToTab(List<SkillAndDays> list)    {
-        SkillAndDays[]tempTab = new SkillAndDays[6];
-        for (int i=0;i<skillAndDaysList.size();i++)
-        {
+    public SkillAndDays[] ListToTab(List<SkillAndDays> list) {
+        SkillAndDays[] tempTab = new SkillAndDays[6];
+        for (int i = 0; i < skillAndDaysList.size(); i++) {
 
-            tempTab[i]= skillAndDaysList.get(i);
+            tempTab[i] = skillAndDaysList.get(i);
 
         }
 
@@ -98,20 +122,10 @@ skillAndDaysList.clear();
     }
 
     public void showList(SkillAndDays[] tempTab) {
-        for(int i=0;i<tempTab.length;i++)
-        {
+        for (int i = 0; i < tempTab.length; i++) {
             System.out.println(tempTab[i]);
         }
     }
 
-    public SkillAndDays[] returSkillAndDays()    {
-        SkillAndDays[] TempTab= new SkillAndDays[6];
-        for(int i=0;i<skillAndDaysList.size();i++)
-        {
-            TempTab[i]=skillAndDaysList.get(i);
-
-        }
-        return TempTab;
-    }
 }
 
