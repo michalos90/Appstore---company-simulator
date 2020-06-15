@@ -26,11 +26,11 @@ public class SkillAndDays extends CreateRandom {
 
         for (int i = 0; i < number; i++) {
             if (skillAndDaysList.size() == 0) {
-                skillAndDaysList.add(new SkillAndDays(generateProjectSkill(), randomInt(days + 1)));
+                skillAndDaysList.add(new SkillAndDays(generateSkill(), randomInt(days + 1)));
             } else {
                 String value;
                 do {
-                    value = generateProjectSkill();
+                    value = generateSkill();
                 } while (generateUniqueSkills(value) == true);
                 skillAndDaysList.add(new SkillAndDays(value, randomInt(days + 1)));
             }

@@ -160,7 +160,7 @@ public class CreateRandom {
         return generatedProjectName;
     }
 
-    public String generateProjectSkill() {
+    public String generateSkill() {
 
         String generatedSkill = "wordpress";
         switch (randomInt(7)) {
@@ -190,5 +190,39 @@ public class CreateRandom {
         return generatedSkill;
     }
 
+    public String[] uniqueSkills() {
+
+        Integer no = randomInt(3) + 3;
+        String skill;
+        String[] tab = new String[6];
+
+
+        for (int i = 0; i < no; i++) {
+            if (i == 0) {
+                tab[i] = generateSkill();
+            } else {
+                do {
+                    skill = generateSkill();
+                } while (skills(tab, skill) == true);
+                tab[i] = skill;
+
+            }
+
+        }
+
+        return tab;
+
+    }
+
+    public boolean skills(String[] tab, String skill) {
+        boolean value = false;
+        for (int i = 0; i < tab.length; i++) {
+            if (tab[i] == skill) {
+                value = true;
+
+            }
+        }
+        return value;
+    }
 
 }

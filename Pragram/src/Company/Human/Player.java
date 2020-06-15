@@ -6,13 +6,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Player extends Programer {
-    Double money = 2000.0;
-    Integer lookingPoints = 15;
-
     List<Project> myProjectList = new LinkedList<>();
     List<Dealer> myDealerList = new LinkedList<>();
     List<Programer> myProgramerList = new LinkedList<>();
     List<Friend> myFriendList = new LinkedList<>();
+    Double money = 2000.0;
+    Integer lookingPoints = 15 + myDealerList.size();
+    Integer programingPoint = 1 + myProgramerList.size();
+
 
     public Player(String name, String surname) {
         this.firstName = name;
@@ -63,9 +64,11 @@ public class Player extends Programer {
         return myProjectList.size();
     }
 
+
     public void removeFromProjectList(Integer Index) {
         myProjectList.remove(Index);
     }
+
 
 }
 

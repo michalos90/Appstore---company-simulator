@@ -330,13 +330,10 @@ public class Project extends CreateRandom {
                 ", \nprice=" + price +
                 ", \namount_Of_Penalty per day=" + amount_Of_Penalty +
                 ", \ncomplexity='" + complexity + '\'' +
-                ", \npayDay=" + payDay +
-                ", \nclientId=" + clientId +
-                ", \nclientType=" + clientType +
-                ", \nclientPayDay=" + clientPayDay +
-                ", \nisPently=" + isPently +
+                ", \npayDay=" + payDay + ", \nrequiredTestDays=" + requiredTestDays +
                 ", \nrealPrice=" + realPrice +
-                ", \nrequiredTestDays=" + requiredTestDays;
+                ", \nDate Of Comissioing=" + dateOfCommissioning;
+
     }
 }
 

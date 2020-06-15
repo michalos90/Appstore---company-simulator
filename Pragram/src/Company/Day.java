@@ -1,6 +1,7 @@
 package Company;
 
 
+import Company.Human.Friend;
 import Company.Human.Player;
 import Company.Project.Project;
 
@@ -11,12 +12,12 @@ import java.util.Scanner;
 public class Day {
     LocalDate day = LocalDate.of(2020, 1, 1);
     Integer playedDays = 1;
-    Integer lookingForDays = 0;
 
     DayOfWeek dayOfWeek = day.getDayOfWeek();
     LocalDate conctractDay;
     Player first = new Player("Michał", "Szyc");
     Project project = new Project();
+    Friend friend = new Friend();
     Scanner scan = new Scanner(System.in);
 
     public void Today() {
@@ -33,21 +34,27 @@ public class Day {
         return this.day.getDayOfWeek();
     }
 
+    public void firstDay() {
+        friend.generateFriend();
+    }
+
     public void workTime() {
         System.out.println("Today is: " + this.day.getDayOfWeek() + " Day " + playedDays);
         System.out.println("What u will do today : ");
         System.out.println("1. Sign a contract");
         System.out.println("2. Looking for client");
-        System.out.println("3. Test Ur App");
-        System.out.println("4. Hand over the finished project to the client");
-        System.out.println("5. Hire a new employee");
-        System.out.println("6. Dismiss an employee");
-        System.out.println("7. Paper Time (you need at least 2 a month to not lose)");
+        System.out.println("3. Programming Day");
+        System.out.println("4. Test Ur App");
+        System.out.println("5. Hand over the finished project to the client");
+        System.out.println("6. Hire a new employee");
+        System.out.println("7. Dismiss an employee");
+        System.out.println("8. Paper Time (you need at least 2 a month to not lose)");
 
         Integer option;
         do {
+
             option = scan.nextInt();
-        } while (option < 0 && option >= 7);
+        } while (option < 0 || option >= 8);
         Option(option);
 
 
@@ -62,22 +69,28 @@ public class Day {
                 addLookingPoint();
                 break;
             case 3:
-                testUrApp();
+                programmingDay();
                 break;
             case 4:
-                handOverTheFinishedProject();
+                testUrApp();
                 break;
             case 5:
-                hireAnEmployee();
+                handOverTheFinishedProject();
                 break;
             case 6:
-                dissmisEmploye();
+                hireAnEmployee();
                 break;
             case 7:
+                dissmisEmploye();
+                break;
+            case 8:
                 paperTimeDay();
+                break;
+
 
         }
     }
+
 
     public void signAContract() {
         if (project.getSizeOfList() == 0) {
@@ -112,8 +125,26 @@ public class Day {
 
     }
 
+
     public void addLookingPoint() {
         first.addPoint();
+    }
+
+    public void programmingDay() {
+        if (first.activeProjects() == 0) {
+            System.out.println("Its look like u don't have any project sign a somone");
+            signAContract();
+        } else if (first.activeProjects() == 1) {
+            System.out.println("Its Look Like u have only one project to work");
+        } else {
+            first.showProjectList();
+            System.out.println("This is Ur Projects on what one u want work ? chose");
+            Integer option;
+            do {
+                option = scan.nextInt();
+            } while (option < 0 || option >= first.activeProjects() - 1);
+
+        }
     }
 
     public void hireAnEmployee() {
