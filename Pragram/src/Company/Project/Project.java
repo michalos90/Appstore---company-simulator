@@ -3,6 +3,7 @@ package Company.Project;
 import Company.CreateRandom;
 import Company.Human.Client;
 
+import java.io.InterruptedIOException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -41,8 +42,6 @@ public class Project extends CreateRandom {
                    Double nRealPrice,
                    Integer nRequiredTestDays,
                    Integer nDateOfCommissioning
-
-
     ) {
         this.name = nName;
         this.nameClient = nNameClient;
@@ -82,8 +81,9 @@ public class Project extends CreateRandom {
         Double RealPrice = getRealPrice(Price, TypeClient);
         Double ValueOfPently = RealPrice * randomInt(5) / 100;
         Integer DateOfCommissioning = ClientPayDay - randomInt(7);
-        SkillAndDays[] TempTab = new SkillAndDays[6];
-        TempTab = skillAndDays.returSkillAndDays();
+        SkillAndDays[] TempTab = skillAndDays.returSkillAndDays();
+
+
         listOfProject.add(new Project(generateProjectName(),
                 ClientName,
                 Price,
@@ -206,7 +206,7 @@ public class Project extends CreateRandom {
                 point = point - 1;
             } while (point > 0);
 
-        } else if (point >= 360) {
+        } else if (point >= 360 && point < 500) {
             days = 150;
             do {
                 if (point % 5 == 0) {
@@ -225,6 +225,18 @@ public class Project extends CreateRandom {
                     } else {
                         numberOfProjects(1, days);
                     }
+                }
+                point = point - 1;
+            } while (point > 0);
+
+        } else if (point >= 500) {
+            days = 150;
+            do {
+                if (point % 5 == 0) {
+
+
+                    numberOfProjects(6, days);
+
                 }
                 point = point - 1;
             } while (point > 0);
@@ -290,9 +302,29 @@ public class Project extends CreateRandom {
 
     }
 
+    public Integer getSizeOfList() {
+        return listOfProject.size();
+    }
+
+    public Project getAProject(Integer Option) {
+        return listOfProject.get(Option);
+    }
+
+    public void removeFromList() {
+        listOfProject.clear();
+    }
+
+    public SkillAndDays[] fromProjectToSkillAndDatstab(Project project) {
+        return project.ListSkillAndDaystab;
+    }
+
+    public boolean parseSkills(SkillAndDays[] tab, String[] Tab) {
+        return skillAndDays.parseSkills(tab, Tab);
+    }
+
     @Override
     public String toString() {
-        return "name='" + name + '\'' +
+        return "\nname='" + name + '\'' +
                 ", \nnameClient='" + nameClient + '\'' +
                 ", \nListSkillAndDaystab=" + Arrays.toString(ListSkillAndDaystab) +
                 ", \nprice=" + price +

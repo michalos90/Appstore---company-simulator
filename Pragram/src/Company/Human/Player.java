@@ -9,6 +9,10 @@ public class Player extends Programer {
     Double money = 2000.0;
     Integer lookingPoints = 15;
 
+    List<Project> myProjectList = new LinkedList<>();
+    List<Dealer> myDealerList = new LinkedList<>();
+    List<Programer> myProgramerList = new LinkedList<>();
+    List<Friend> myFriendList = new LinkedList<>();
 
     public Player(String name, String surname) {
         this.firstName = name;
@@ -20,18 +24,47 @@ public class Player extends Programer {
         this.skills[3] = "wordpress";
         this.skills[4] = "prestashop";
 
-        List<Project> myProjectList = new LinkedList<>();
-        List<Dealer> myDealerList = new LinkedList<>();
-        List<Programer> myProgramerList = new LinkedList<>();
-        List<Friend> myFriendList = new LinkedList<>();
-
 
         //
 
     }
 
+    public void addPoint() {
+        lookingPoints++;
+    }
+
+    public String[] skillsToProject() {
+        return skills;
+    }
+
     public Integer getPoints() {
         return lookingPoints;
+    }
+
+    public void addToMyProjectsList(Project project) {
+        myProjectList.add(project);
+    }
+
+    public void showProjectList() {
+        for (Project item : myProjectList) {
+            System.out.println(item);
+        }
+    }
+
+    public Project getObjectFromProject(Integer number) {
+        return myProjectList.get(number);
+    }
+
+    public Project getLastObjectFromProject() {
+        return myProjectList.get(myProjectList.size() - 1);
+    }
+
+    public Integer activeProjects() {
+        return myProjectList.size();
+    }
+
+    public void removeFromProjectList(Integer Index) {
+        myProjectList.remove(Index);
     }
 
 }

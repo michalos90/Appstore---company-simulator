@@ -43,6 +43,57 @@ public class SkillAndDays extends CreateRandom {
         return skillAndDaysList;
     }
 
+    public boolean parseSkills(SkillAndDays[] tab, String[] Tab) {
+        List<SkillAndDays> tempList = fromSkillAndDaysTabToString(tab);
+        String[] first = stringTab(tempList);
+        String[] second = Tab;
+        Integer value = 0;
+        boolean check = false;
+
+
+        for (int j = 0; j < second.length; j++) {
+            for (int i = 0; i < first.length; i++) {
+                if (first[i].equals(second[j]) == true) {
+                    value++;
+                }
+
+            }
+        }
+        if (value == first.length) {
+            check = true;
+        }
+
+        return check;
+    }
+
+    public List<SkillAndDays> fromSkillAndDaysTabToString(SkillAndDays[] tab) {
+        List<SkillAndDays> TempList = new LinkedList<>();
+        for (int i = 0; i < tab.length; i++) {
+
+            TempList.add(tab[i]);
+        }
+        return TempList;
+    }
+
+    public String[] stringTab(List<SkillAndDays> tempList) {
+        String[] TempTab = new String[tempList.size()];
+        int i = 0;
+        for (SkillAndDays Item : tempList) {
+            TempTab[i] = Item.skill;
+            i++;
+        }
+        return TempTab;
+    }
+
+    public Integer[] IntTab(List<SkillAndDays> tempList) {
+        Integer[] TempTab = new Integer[6];
+        int i = 0;
+        for (SkillAndDays Item : tempList) {
+            TempTab[i] = Item.days;
+            i++;
+        }
+        return TempTab;
+    }
 
     @Override
     public String toString() {
@@ -56,7 +107,7 @@ public class SkillAndDays extends CreateRandom {
 
         for (SkillAndDays item : skillAndDaysList) {
 
-            value += item.days * 500;
+            value += item.days * 1000;
 
         }
         return value;
@@ -84,14 +135,11 @@ public class SkillAndDays extends CreateRandom {
     }
 
     public SkillAndDays[] returSkillAndDays() {
-        SkillAndDays[] TempTab = new SkillAndDays[6];
+        SkillAndDays[] TempTab = new SkillAndDays[skillAndDaysList.size()];
         for (int i = 0; i < skillAndDaysList.size(); i++) {
             TempTab[i] = skillAndDaysList.get(i);
-
         }
         return TempTab;
     }
-
-
 }
 
