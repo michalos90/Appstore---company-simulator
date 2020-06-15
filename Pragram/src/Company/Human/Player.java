@@ -24,10 +24,6 @@ public class Player extends Programer {
         this.skills[2] = "database";
         this.skills[3] = "wordpress";
         this.skills[4] = "prestashop";
-
-
-        //
-
     }
 
     public void addPoint() {
@@ -64,9 +60,13 @@ public class Player extends Programer {
         return myProjectList.size();
     }
 
+    public void removeLastElementFromProjectList() {
+        myProjectList.remove(myProjectList.size()-1);
+    }
 
-    public void removeFromProjectList(Integer Index) {
-        myProjectList.remove(Index);
+    public void workignDay(Project project)
+    {
+        myProjectList.set(myProjectList.size()-1,project);
     }
 
 

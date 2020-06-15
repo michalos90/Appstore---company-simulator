@@ -1,9 +1,12 @@
 package Company;
 
 import java.util.Random;
+import java.util.Scanner;
 
 public class CreateRandom {
     Random generator = new Random();
+
+    Scanner scan = new Scanner(System.in);
 
     public Integer randomInt(Integer number) {
 
@@ -223,6 +226,14 @@ public class CreateRandom {
             }
         }
         return value;
+    }
+
+    public Integer SeciurityInPutInt(int max){
+        Integer number;
+        do{
+            number=scan.nextInt();
+        }while(number<0||number>max);
+        return number;
     }
 
 }

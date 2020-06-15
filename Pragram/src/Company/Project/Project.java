@@ -3,7 +3,6 @@ package Company.Project;
 import Company.CreateRandom;
 import Company.Human.Client;
 
-import java.io.InterruptedIOException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,7 +12,7 @@ public class Project extends CreateRandom {
 
     String name;
     String nameClient;
-    SkillAndDays[] ListSkillAndDaystab;
+    SAD[] listSADtab;
     Double price;
     Double amount_Of_Penalty;
     String complexity;
@@ -26,7 +25,7 @@ public class Project extends CreateRandom {
     Integer requiredTestDays;
     Integer dateOfCommissioning;
     Client client = new Client();
-    SkillAndDays skillAndDays = new SkillAndDays();
+    SAD SAD = new SAD();
 
     public Project(String nName,
                    String nNameClient,
@@ -35,7 +34,7 @@ public class Project extends CreateRandom {
                    Integer nClientId,
                    Double nAmount_Of_Penalty,
                    Integer nPayDay,
-                   SkillAndDays[] tab,
+                   SAD[] tab,
                    Integer nClientType,
                    Integer nClientPayDay,
                    boolean nIsPently,
@@ -50,8 +49,8 @@ public class Project extends CreateRandom {
         this.complexity = nComplexity;
         this.payDay = nPayDay;
         this.clientId = nClientId;
-        this.ListSkillAndDaystab = new SkillAndDays[6];
-        this.ListSkillAndDaystab = tab;
+        this.listSADtab = new SAD[6];
+        this.listSADtab = tab;
         this.clientType = nClientType;
         this.clientPayDay = nClientPayDay;
         this.isPently = nIsPently;
@@ -68,20 +67,20 @@ public class Project extends CreateRandom {
 
     public void generateProject(Integer skills, Integer days) {
         client.checkClientList();
-        skillAndDays.createSkillAndDaysList(skills, days);
+        SAD.createSkillAndDaysList(skills, days);
         Integer number = randomInt(33);
-        Integer mDays = skillAndDays.getDaysFromList() - skillAndDays.getDaysFromList() * randomInt(25) / 100;
+        Integer mDays = SAD.getDaysFromList() - SAD.getDaysFromList() * randomInt(25) / 100;
         Integer ClientPayDay = getClientPayDay(mDays, client.getTypeFromList(number));
         boolean Pently = chance(client.getTypeFromList(number));
         Integer TypeClient = client.getTypeFromList(number);
         String ClientName = client.getNameClientFromList(number);
-        String Complexity = setComplexityInList(skillAndDays.copyList());
+        String Complexity = setComplexityInList(SAD.copyList());
         Integer RequiredTestDays = mDays / 3;
-        Double Price = skillAndDays.setPriceOnList() + (RequiredTestDays * 450);//+
+        Double Price = SAD.setPriceOnList() + (RequiredTestDays * 450);//+
         Double RealPrice = getRealPrice(Price, TypeClient);
         Double ValueOfPently = RealPrice * randomInt(5) / 100;
         Integer DateOfCommissioning = ClientPayDay - randomInt(7);
-        SkillAndDays[] TempTab = skillAndDays.returSkillAndDays();
+        SAD[] TempTab = SAD.returSkillAndDays();
 
 
         listOfProject.add(new Project(generateProjectName(),
@@ -246,7 +245,7 @@ public class Project extends CreateRandom {
 
     }
 
-    public String setComplexityInList(List<SkillAndDays> list) {
+    public String setComplexityInList(List<SAD> list) {
         String value = "";
         switch (list.size()) {
             case 1:
@@ -314,19 +313,29 @@ public class Project extends CreateRandom {
         listOfProject.clear();
     }
 
-    public SkillAndDays[] fromProjectToSkillAndDatstab(Project project) {
-        return project.ListSkillAndDaystab;
+    public SAD[] fromProjectToSADtab(Project project) {
+        return project.listSADtab;
     }
 
-    public boolean parseSkills(SkillAndDays[] tab, String[] Tab) {
-        return skillAndDays.parseSkills(tab, Tab);
+    public boolean parseSkills(Project project, String[] Tab) {
+        SAD[]tab=fromProjectToSADtab(project);
+        return SAD.parseSkills(tab, Tab);
     }
+
+    public Project setNewHours(Project project){
+
+        SAD[] tab= fromProjectToSADtab(project);
+project.listSADtab=SAD.workDay(tab);
+return project;
+
+    }
+
 
     @Override
     public String toString() {
         return "\nname='" + name + '\'' +
                 ", \nnameClient='" + nameClient + '\'' +
-                ", \nListSkillAndDaystab=" + Arrays.toString(ListSkillAndDaystab) +
+                ", \nListSkillAndDaystab=" + Arrays.toString(listSADtab) +
                 ", \nprice=" + price +
                 ", \namount_Of_Penalty per day=" + amount_Of_Penalty +
                 ", \ncomplexity='" + complexity + '\'' +

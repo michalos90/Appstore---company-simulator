@@ -4,12 +4,12 @@ package Company;
 import Company.Human.Friend;
 import Company.Human.Player;
 import Company.Project.Project;
+import Company.Project.SAD;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.Scanner;
 
-public class Day {
+public class Day extends  CreateRandom{
     LocalDate day = LocalDate.of(2020, 1, 1);
     Integer playedDays = 1;
 
@@ -18,7 +18,6 @@ public class Day {
     Player first = new Player("Michał", "Szyc");
     Project project = new Project();
     Friend friend = new Friend();
-    Scanner scan = new Scanner(System.in);
 
     public void Today() {
         System.out.println("Hello Today is  " + day + " " + dayOfWeek);
@@ -50,12 +49,8 @@ public class Day {
         System.out.println("7. Dismiss an employee");
         System.out.println("8. Paper Time (you need at least 2 a month to not lose)");
 
-        Integer option;
-        do {
 
-            option = scan.nextInt();
-        } while (option < 0 || option >= 8);
-        Option(option);
+        Option(SeciurityInPutInt(8));
 
 
     }
@@ -66,7 +61,7 @@ public class Day {
                 signAContract();
                 break;
             case 2:
-                addLookingPoint();
+                addPoint();
                 break;
             case 3:
                 programmingDay();
@@ -99,12 +94,9 @@ public class Day {
         project.showListOfProject();
         Integer sizeList = project.getSizeOfList();
         System.out.println("\nAs u see u have " + sizeList + " projects available.\nWhich one will u choose?");
-        Integer option;
-        do {
-            option = scan.nextInt();
-        } while (option < 0 || option > sizeList);
+
         System.out.println("U chose project");
-        first.addToMyProjectsList(project.getAProject(option));
+        first.addToMyProjectsList(project.getAProject(SeciurityInPutInt(sizeList-1)));
         project.removeFromList();
         System.out.println("*********************");
         first.showProjectList();
@@ -112,11 +104,11 @@ public class Day {
 
         System.out.println("*********************");
 
-        boolean checkingProject = project.parseSkills(project.fromProjectToSkillAndDatstab(first.getLastObjectFromProject()), first.skillsToProject());// checking
+        boolean checkingProject = project.parseSkills(first.getLastObjectFromProject(),first.skillsToProject());// checking
 
         if (checkingProject == false) {
             System.out.println("The Project Unsuccessful added, u need probably mobile programmer");
-            first.removeFromProjectList(first.activeProjects());
+            first.removeLastElementFromProjectList();
 
         } else {
             System.out.println("The Project successful added\nActive Projects: " + first.activeProjects());
@@ -126,7 +118,7 @@ public class Day {
     }
 
 
-    public void addLookingPoint() {
+    public void addPoint() {
         first.addPoint();
     }
 
@@ -135,7 +127,9 @@ public class Day {
             System.out.println("Its look like u don't have any project sign a somone");
             signAContract();
         } else if (first.activeProjects() == 1) {
-            System.out.println("Its Look Like u have only one project to work");
+            System.out.println("Its Look Like u have only one project to work and u will be work on this project: ");
+            first.showProjectList();
+            first.workignDay(project.setNewHours(first.getLastObjectFromProject()));
         } else {
             first.showProjectList();
             System.out.println("This is Ur Projects on what one u want work ? chose");
@@ -143,6 +137,7 @@ public class Day {
             do {
                 option = scan.nextInt();
             } while (option < 0 || option >= first.activeProjects() - 1);
+
 
         }
     }
