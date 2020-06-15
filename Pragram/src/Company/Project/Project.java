@@ -12,20 +12,18 @@ public class Project extends CreateRandom {
 
     String name;
     String nameClient;
-
-    // List<SkillAndDays> ListSkillAndDays;
-    SkillAndDays[] ListSkillAndDaystab;//
+    SkillAndDays[] ListSkillAndDaystab;
     Double price;
     Double amount_Of_Penalty;
     String complexity;
     Integer payDay;
     Integer clientId;
-
     Integer clientType;
     Integer clientPayDay;
     boolean isPently;
     Double realPrice;
-
+    Integer requiredTestDays;
+    Integer dateOfCommissioning;
     Client client = new Client();
     SkillAndDays skillAndDays = new SkillAndDays();
 
@@ -36,12 +34,13 @@ public class Project extends CreateRandom {
                    Integer nClientId,
                    Double nAmount_Of_Penalty,
                    Integer nPayDay,
-                   //   List<SkillAndDays> nList,//
-                   SkillAndDays[] tab,//
+                   SkillAndDays[] tab,
                    Integer nClientType,
                    Integer nClientPayDay,
                    boolean nIsPently,
-                   Double nRealPrice
+                   Double nRealPrice,
+                   Integer nRequiredTestDays,
+                   Integer nDateOfCommissioning
 
 
     ) {
@@ -52,59 +51,188 @@ public class Project extends CreateRandom {
         this.complexity = nComplexity;
         this.payDay = nPayDay;
         this.clientId = nClientId;
-        // this.ListSkillAndDays = nList;//
-        this.ListSkillAndDaystab = new SkillAndDays[6];//
+        this.ListSkillAndDaystab = new SkillAndDays[6];
         this.ListSkillAndDaystab = tab;
         this.clientType = nClientType;
         this.clientPayDay = nClientPayDay;
         this.isPently = nIsPently;
         this.realPrice = nRealPrice;
-
-
+        this.requiredTestDays = nRequiredTestDays;
+        this.dateOfCommissioning = nDateOfCommissioning;
     }
 
-
     List<Project> listOfProject = new LinkedList<>();
-
 
     public Project() {
 
     }
 
-    public void generateListOfProject() {
+    public void generateProject(Integer skills, Integer days) {
         client.checkClientList();
-        skillAndDays.createSkillAndDaysList(6);
-
+        skillAndDays.createSkillAndDaysList(skills, days);
         Integer number = randomInt(33);
         Integer mDays = skillAndDays.getDaysFromList() - skillAndDays.getDaysFromList() * randomInt(25) / 100;
         Integer ClientPayDay = getClientPayDay(mDays, client.getTypeFromList(number));
-
         boolean Pently = chance(client.getTypeFromList(number));
-        List<SkillAndDays> tempList = new LinkedList<>();
-        tempList = skillAndDays.copyList();
         Integer TypeClient = client.getTypeFromList(number);
-        Double Price = skillAndDays.setPriceOnList();
-        Double RealPrice = getRealPrice(Price, TypeClient);
         String ClientName = client.getNameClientFromList(number);
         String Complexity = setComplexityInList(skillAndDays.copyList());
-
+        Integer RequiredTestDays = mDays / 3;
+        Double Price = skillAndDays.setPriceOnList() + (RequiredTestDays * 450);//+
+        Double RealPrice = getRealPrice(Price, TypeClient);
+        Double ValueOfPently = RealPrice * randomInt(5) / 100;
+        Integer DateOfCommissioning = ClientPayDay - randomInt(7);
+        SkillAndDays[] TempTab = new SkillAndDays[6];
+        TempTab = skillAndDays.returSkillAndDays();
         listOfProject.add(new Project(generateProjectName(),
                 ClientName,
                 Price,
                 Complexity,
                 number,
-                20.5,
+                ValueOfPently,
                 mDays,
-                skillAndDays.returSkillAndDays(),
+                TempTab,
                 TypeClient,
                 ClientPayDay,
                 Pently,
-                RealPrice
+                RealPrice,
+                RequiredTestDays,
+                DateOfCommissioning
+
+
         ));
 
 
     }
 
+    public void numberOfProjects(Integer skills, Integer days) {
+        generateProject(skills, days);
+    }
+
+    public void createProjectList(Integer point) {
+        Integer number;
+        Integer days;
+        if (point < 30) {
+            days = 20;
+            do {
+                if (point % 5 == 0) {
+                    if (
+                            randomInt(2) >= 1) {
+                        numberOfProjects(1, days);
+                    } else {
+                        numberOfProjects(2, days);
+                    }
+
+                }
+                point = point - 1;
+            } while (point > 0);
+        } else if (point >= 30 && point < 60) {
+            days = 40;
+            do {
+                if (point % 5 == 0) {
+
+                    number = randomInt(100);
+                    if (number < 20) {
+                        numberOfProjects(3, days);
+
+                    } else if (number >= 20 && number < 60) {
+                        numberOfProjects(2, days);
+                    } else {
+                        numberOfProjects(1, days);
+                    }
+                }
+                point = point - 1;
+            } while (point > 0);
+        } else if (point >= 60 && point < 90) {
+            days = 50;
+            do {
+                if (point % 5 == 0) {
+
+                    number = randomInt(100);
+                    if (number < 10) {
+                        numberOfProjects(4, days);
+
+                    } else if (number >= 10 && number < 30) {
+                        numberOfProjects(3, days);
+                    } else if (number >= 30 && number < 65) {
+                        numberOfProjects(2, days);
+                    } else {
+                        numberOfProjects(1, days);
+                    }
+                }
+                point = point - 1;
+            } while (point > 0);
+        } else if (point >= 90 && point < 180) {
+            days = 75;
+            do {
+                if (point % 5 == 0) {
+
+                    number = randomInt(100);
+                    if (number < 5) {
+                        numberOfProjects(5, days);
+                    } else if (number >= 5 && number < 15) {
+                        numberOfProjects(4, days);
+                    } else if (number >= 15 && number < 50) {
+                        numberOfProjects(3, days);
+                    } else if (number >= 50 && number < 80) {
+                        numberOfProjects(2, days);
+                    } else {
+                        numberOfProjects(1, days);
+                    }
+                }
+                point = point - 1;
+            } while (point > 0);
+
+        } else if (point >= 180 && point < 360) {
+            days = 100;
+            do {
+                if (point % 5 == 0) {
+
+                    number = randomInt(100);
+                    if (number < 20) {
+                        numberOfProjects(6, days);
+                    } else if (number >= 20 && number < 40) {
+                        numberOfProjects(5, days);
+                    } else if (number >= 40 && number < 60) {
+                        numberOfProjects(4, days);
+                    } else if (number >= 60 && number < 80) {
+                        numberOfProjects(3, days);
+                    } else if (number >= 80 && number < 90) {
+                        numberOfProjects(2, days);
+                    } else {
+                        numberOfProjects(1, days);
+                    }
+                }
+                point = point - 1;
+            } while (point > 0);
+
+        } else if (point >= 360) {
+            days = 150;
+            do {
+                if (point % 5 == 0) {
+
+                    number = randomInt(100);
+                    if (number < 5) {
+                        numberOfProjects(6, days);
+                    } else if (number >= 5 && number < 15) {
+                        numberOfProjects(5, days);
+                    } else if (number >= 15 && number < 40) {
+                        numberOfProjects(4, days);
+                    } else if (number >= 40 && number < 65) {
+                        numberOfProjects(3, days);
+                    } else if (number >= 65 && number < 90) {
+                        numberOfProjects(2, days);
+                    } else {
+                        numberOfProjects(1, days);
+                    }
+                }
+                point = point - 1;
+            } while (point > 0);
+
+        }
+
+
+    }
 
     public String setComplexityInList(List<SkillAndDays> list) {
         String value = "";
@@ -134,10 +262,10 @@ public class Project extends CreateRandom {
 
     public boolean chance(Integer Type) {
 
-        boolean value = false;
+        boolean value = true;
 
         if (randomInt(100) <= 20 && Type == 1) {
-            value = true;
+            value = false;
         }
         return value;
 
@@ -160,27 +288,24 @@ public class Project extends CreateRandom {
 
         return temp;
 
-    } //checking type 3 client witch payments
-
+    }
 
     @Override
     public String toString() {
-        return "Project{" +
-                "name='" + name + '\'' +
-                ", nameClient='" + nameClient + '\'' +
-                ", ListSkillAndDaystab=" + Arrays.toString(ListSkillAndDaystab) +
-                ", price=" + price +
-                ", amount_Of_Penalty=" + amount_Of_Penalty +
-                ", complexity='" + complexity + '\'' +
-                ", payDay=" + payDay +
-                ", clientId=" + clientId +
-                ", clientType=" + clientType +
-                ", clientPayDay=" + clientPayDay +
-                ", isPently=" + isPently +
-                ", realPrice=" + realPrice +
-                ", client=" + client +
-                ", skillAndDays=" + skillAndDays +
-                '}';
+        return "name='" + name + '\'' +
+                ", \nnameClient='" + nameClient + '\'' +
+                ", \nListSkillAndDaystab=" + Arrays.toString(ListSkillAndDaystab) +
+                ", \nprice=" + price +
+                ", \namount_Of_Penalty per day=" + amount_Of_Penalty +
+                ", \ncomplexity='" + complexity + '\'' +
+                ", \npayDay=" + payDay +
+                ", \nclientId=" + clientId +
+                ", \nclientType=" + clientType +
+                ", \nclientPayDay=" + clientPayDay +
+                ", \nisPently=" + isPently +
+                ", \nrealPrice=" + realPrice +
+                ", \nrequiredTestDays=" + requiredTestDays;
     }
 }
+
 

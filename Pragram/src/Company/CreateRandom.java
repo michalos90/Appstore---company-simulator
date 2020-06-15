@@ -7,12 +7,13 @@ public class CreateRandom {
 
     public Integer randomInt(Integer number) {
 
+
         return generator.nextInt(number);
     }
 
     public String generateLastName() {
         String generatedRandomName = "";
-        switch (randomInt(11)) {
+        switch (randomInt(12)) {
             case 1:
                 generatedRandomName = "Smith";
                 break;
@@ -57,7 +58,7 @@ public class CreateRandom {
 
     public String generateName() {
         String generatedRandomName = "";
-        switch (randomInt(11)) {
+        switch (randomInt(12)) {
             case 1:
                 generatedRandomName = "Michael";
                 break;
@@ -118,7 +119,7 @@ public class CreateRandom {
 
     public String generateProjectName() {
         String generatedProjectName = "";
-        switch (randomInt(11)) {
+        switch (randomInt(12)) {
             case 1:
                 generatedProjectName = "Project X";
                 break;
@@ -181,6 +182,10 @@ public class CreateRandom {
             case 6:
                 generatedSkill = "mobile";
                 break;
+            default:
+                generatedSkill = "database";
+                break;
+
         }
         return generatedSkill;
     }

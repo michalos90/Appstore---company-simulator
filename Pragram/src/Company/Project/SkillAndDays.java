@@ -19,20 +19,20 @@ public class SkillAndDays extends CreateRandom {
 
     }
 
-    public void createSkillAndDaysList(int number) {
+    public void createSkillAndDaysList(Integer number, Integer days) {
         if (skillAndDaysList.size() != 0) {
             skillAndDaysList.clear();
         }
 
         for (int i = 0; i < number; i++) {
             if (skillAndDaysList.size() == 0) {
-                skillAndDaysList.add(new SkillAndDays(generateProjectSkill(), randomInt(100)));
+                skillAndDaysList.add(new SkillAndDays(generateProjectSkill(), randomInt(days + 1)));
             } else {
                 String value;
                 do {
                     value = generateProjectSkill();
                 } while (generateUniqueSkills(value) == true);
-                skillAndDaysList.add(new SkillAndDays(value, randomInt(100)));
+                skillAndDaysList.add(new SkillAndDays(value, randomInt(days + 1)));
             }
 
 
@@ -42,6 +42,7 @@ public class SkillAndDays extends CreateRandom {
     public List<SkillAndDays> copyList() {
         return skillAndDaysList;
     }
+
 
     @Override
     public String toString() {
@@ -91,41 +92,6 @@ public class SkillAndDays extends CreateRandom {
         return TempTab;
     }
 
-    public List<SkillAndDays> getDayFromTab(SkillAndDays[] tab) {
-
-        List<SkillAndDays> TempList = new LinkedList<>();
-
-        return TempList;
-
-    }
-
-    public void clearList() {
-        skillAndDaysList.clear();
-    }
-
-    public void showList(List<SkillAndDays> list) {
-        for (SkillAndDays items : list) {
-            System.out.println(items.days + items.skill);
-        }
-
-    }
-
-    public SkillAndDays[] ListToTab(List<SkillAndDays> list) {
-        SkillAndDays[] tempTab = new SkillAndDays[6];
-        for (int i = 0; i < skillAndDaysList.size(); i++) {
-
-            tempTab[i] = skillAndDaysList.get(i);
-
-        }
-
-        return tempTab;
-    }
-
-    public void showList(SkillAndDays[] tempTab) {
-        for (int i = 0; i < tempTab.length; i++) {
-            System.out.println(tempTab[i]);
-        }
-    }
 
 }
 
