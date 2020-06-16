@@ -264,10 +264,10 @@ public class Project extends CreateRandom {
     }
 
     public void showListOfProject() {
-
+        Integer i = 0;
         for (Project project : listOfProject) {
-            System.out.println(project);
-
+            System.out.println(i + ". " + project);
+            i++;
         }
     }
 
@@ -318,19 +318,19 @@ public class Project extends CreateRandom {
     }
 
     public boolean parseSkills(Project project, String[] Tab) {
-        SAD[]tab=fromProjectToSADtab(project);
+        SAD[] tab = fromProjectToSADtab(project);
         return SAD.parseSkills(tab, Tab);
     }
 
-    public Project setNewHours(Project project){
+    public Project setNewHours(Project project) {
 
-        SAD[] tab= fromProjectToSADtab(project);
-project.listSADtab=SAD.workDay(tab);
-return project;
+        SAD[] tab = fromProjectToSADtab(project);
+        project.listSADtab = SAD.workDay(tab);
+        return project;
 
     }
 
-    public Project setNewTestingHours(Project project){
+    public Project setNewTestingHours(Project project) {
         project.requiredTestDays--;
         return project;
     }

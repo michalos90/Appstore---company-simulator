@@ -56,5 +56,4 @@ public class Client extends Human {
         }
         return value;
     }
-
 }

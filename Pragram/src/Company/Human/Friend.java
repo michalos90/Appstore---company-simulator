@@ -12,7 +12,6 @@ public class Friend extends Programer {
         this.lastName = nLastName;
         this.skills = nSkill;
         this.type = nType;
-
     }
 
     List<Friend> friendList = new LinkedList<>();
@@ -43,7 +42,7 @@ public class Friend extends Programer {
         return "\nfirstName='" + firstName + '\'' +
                 "\nlastName='" + lastName + '\'' +
                 "\n skills=" + Arrays.toString(skills) +
-                "\nType=" + type;
+                "\nType=" + type + "\nChose by type, type 0 is the best most expensive, 1 worst but not that expensive as 0 , 2 the worst but also the cheapest";
     }
 
     public Friend getFriend(int number) {

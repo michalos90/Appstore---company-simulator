@@ -7,13 +7,14 @@ import java.util.List;
 
 public class Player extends Programer {
     List<Project> myProjectList = new LinkedList<>();
-    List<Dealer> myDealerList = new LinkedList<>();
+    List<Human> myDealerList = new LinkedList<>();
     List<Programer> myProgramerList = new LinkedList<>();
     List<Friend> myFriendList = new LinkedList<>();
-    Double money = 2000.0;
+    List<Human> myTesterList = new LinkedList<>();
+    Double cash = 20000.0;
     Integer lookingPoints = 15 + myDealerList.size();
     Integer programingPoint = 1 + myProgramerList.size();
-
+    Integer classifieds = 3;
 
     public Player(String name, String surname) {
         this.firstName = name;
@@ -30,12 +31,36 @@ public class Player extends Programer {
         lookingPoints++;
     }
 
+    public boolean pay(Double cash) {
+        if (checkIfUCouldPay(cash) == true) {
+            Double money = this.cash;
+            this.cash = money - cash;
+            System.out.println("Successful payed u have  " + this.cash);
+            return true;
+        } else {
+            System.out.println("U have only: " + this.cash + " for this buy u need at least: " + cash);
+        }
+        return false;
+    }
+
     public String[] skillsToProject() {
         return skills;
     }
 
     public Integer getPoints() {
         return lookingPoints;
+    }
+
+    public Integer getClassifieds() {
+        return classifieds;
+    }
+
+    public void setClassifieds() {
+        this.classifieds++;
+    }
+
+    public Double getCash() {
+        return cash;
     }
 
     public void addToMyProjectsList(Project project) {
@@ -61,16 +86,84 @@ public class Player extends Programer {
     }
 
     public void removeLastElementFromProjectList() {
-        myProjectList.remove(myProjectList.size()-1);
+        myProjectList.remove(myProjectList.size() - 1);
     }
 
-    public void updateDataProjectList(Project project, int Index)
-    {
-        myProjectList.set(Index,project);
+    public int sizeProgrammerList() {
+        return myProgramerList.size();
     }
 
+    public void updateDataProjectList(Project project, int Index) {
+        myProjectList.set(Index, project);
+    }
 
+    public boolean checkIfUCouldPay(Double cash) {
 
+        if (this.cash >= cash) {
+            return true;
+        }
+        return false;
 
+    }
+
+    public void addToMyProgrammerList(Programer object) {
+        myProgramerList.add(object);
+
+    }
+
+    public Programer getLastProgrammerObj() {
+        return myProgramerList.get(myProgramerList.size() - 1);
+    }
+
+    public void showProgramerList() {
+        for (Programer item : myProgramerList) {
+            System.out.println(item);
+        }
+    }
+
+    public boolean payForProgrammer() {
+        Programer tempObj = getLastProgrammerObj();
+        if (pay(tempObj.cost) == true) {
+            return true;
+        }
+        return false;
+    }
+
+    public void removeLastObjFromProgrammerList() {
+        myProgramerList.remove(myProjectList.size() - 1);
+    }
+
+    public void addTester() {
+        myTesterList.add(generateTester());
+        Human tempObj = myTesterList.get(myTesterList.size() - 1);
+        if (pay(tempObj.cost) == true) {
+            System.out.println("U have now " + myTesterList.size() + " Testers");
+        } else {
+            myTesterList.remove(tempObj);
+        }
+
+    }
+
+    public void addDealer() {
+        myDealerList.add(generateDealer());
+        Human tempObj = myDealerList.get(myDealerList.size() - 1);
+        if (pay(tempObj.cost) == true) {
+            System.out.println("U have now " + myDealerList.size() + " Dealers");
+        } else {
+            myDealerList.remove(tempObj);
+        }
+    }
+
+    public Integer getNumberOfTesters() {
+        return myTesterList.size();
+    }
+
+    public Integer getNumberOfProgrammers() {
+        return myProgramerList.size();
+    }
+
+    public Integer getNumberOfDealers() {
+        return myDealerList.size();
+    }
 }
 

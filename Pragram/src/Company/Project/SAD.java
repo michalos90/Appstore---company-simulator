@@ -16,7 +16,6 @@ public class SAD extends CreateRandom {
     }
 
     public SAD() {
-
     }
 
     public void createSkillAndDaysList(Integer number, Integer days) {
@@ -90,7 +89,7 @@ public class SAD extends CreateRandom {
         int i = 0;
         for (SAD Item : tempList) {
 
-                TempTab[i] = Item.days;
+            TempTab[i] = Item.days;
 
             i++;
         }
@@ -101,7 +100,7 @@ public class SAD extends CreateRandom {
         //SkillAndDays[];
         Integer[] tempInttab = IntTab(fromSkillAndDaysTabToString(tab));
         String[] tempStrintab = stringTab(fromSkillAndDaysTabToString(tab));
-        Integer size=fromSkillAndDaysTabToString(tab).size();
+        Integer size = fromSkillAndDaysTabToString(tab).size();
 
 
         for (int i = 0; i < size; i++) {
@@ -109,10 +108,10 @@ public class SAD extends CreateRandom {
         }
         System.out.println("On What Technology u will work? type form 0");
         tempInttab[SeciurityInPutInt(size)]--;
-       return returnToSADtab(tempInttab, tempStrintab,size);
+        return returnToSADtab(tempInttab, tempStrintab, size);
     }
 
-    public SAD[] returnToSADtab(Integer[] itab, String[] stab,Integer size) {
+    public SAD[] returnToSADtab(Integer[] itab, String[] stab, Integer size) {
         SAD[] TempTab = new SAD[size];
         for (int i = 0; i < size; i++) {
             TempTab[i] = new SAD(stab[i], itab[i]);

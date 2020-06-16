@@ -197,7 +197,7 @@ public class CreateRandom {
 
         Integer no = randomInt(3) + 3;
         String skill;
-        String[] tab = new String[6];
+        String[] tab = new String[no];
 
 
         for (int i = 0; i < no; i++) {
@@ -228,11 +228,11 @@ public class CreateRandom {
         return value;
     }
 
-    public Integer SeciurityInPutInt(int max){
+    public Integer SeciurityInPutInt(int max) {
         Integer number;
-        do{
-            number=scan.nextInt();
-        }while(number<0||number>max);
+        do {
+            number = scan.nextInt();
+        } while (number < 0 || number > max);
         return number;
     }
 
