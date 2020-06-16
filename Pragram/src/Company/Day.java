@@ -133,13 +133,28 @@ public class Day extends  CreateRandom{
         } else {
             first.showProjectList();
             System.out.println("This is Ur Projects on what one u want work ? chose");
-            Integer option;
-            do {
-                option = scan.nextInt();
-            } while (option < 0 || option >= first.activeProjects() - 1);
+           first.workignDay(project.setNewHours(first.getObjectFromProject(SeciurityInPutInt(first.activeProjects() - 1))));
 
 
         }
+    }
+
+    public void testUrApp() {
+        if (first.activeProjects() == 0) {
+            System.out.println("Its look like u don't have any project sign a somone");
+            signAContract();
+        } else if (first.activeProjects() == 1) {
+            System.out.println("Its Look Like u have only one project to work and u will be work on this project: ");
+            first.showProjectList();
+            first.workignDay(project.setNewHours(first.getLastObjectFromProject()));
+        } else {
+            first.showProjectList();
+            System.out.println("This is Ur Projects on what one u want work ? chose");
+            first.workignDay(project.setNewHours(first.getObjectFromProject(SeciurityInPutInt(first.activeProjects() - 1))));
+
+
+        }
+
     }
 
     public void hireAnEmployee() {
@@ -158,9 +173,7 @@ public class Day extends  CreateRandom{
 
     }
 
-    public void testUrApp() {
 
-    }
 
 
 }
