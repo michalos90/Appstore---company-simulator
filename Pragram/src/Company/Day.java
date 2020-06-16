@@ -4,7 +4,6 @@ package Company;
 import Company.Human.Friend;
 import Company.Human.Player;
 import Company.Project.Project;
-import Company.Project.SAD;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -129,29 +128,30 @@ public class Day extends  CreateRandom{
         } else if (first.activeProjects() == 1) {
             System.out.println("Its Look Like u have only one project to work and u will be work on this project: ");
             first.showProjectList();
-            first.workignDay(project.setNewHours(first.getLastObjectFromProject()));
+            first.updateDataProjectList(project.setNewHours(first.getLastObjectFromProject()),first.activeProjects()-1);
         } else {
             first.showProjectList();
             System.out.println("This is Ur Projects on what one u want work ? chose");
-           first.workignDay(project.setNewHours(first.getObjectFromProject(SeciurityInPutInt(first.activeProjects() - 1))));
+           Integer TempInt=SeciurityInPutInt(first.activeProjects() - 1);
+           first.updateDataProjectList(project.setNewHours(first.getObjectFromProject(TempInt)),TempInt);
 
 
         }
     }
 
-    public void testUrApp() {
+    public void testUrApp(){
         if (first.activeProjects() == 0) {
             System.out.println("Its look like u don't have any project sign a somone");
             signAContract();
         } else if (first.activeProjects() == 1) {
             System.out.println("Its Look Like u have only one project to work and u will be work on this project: ");
             first.showProjectList();
-            first.workignDay(project.setNewHours(first.getLastObjectFromProject()));
+            first.updateDataProjectList(project.setNewTestingHours(first.getLastObjectFromProject()),first.activeProjects()-1);
         } else {
             first.showProjectList();
             System.out.println("This is Ur Projects on what one u want work ? chose");
-            first.workignDay(project.setNewHours(first.getObjectFromProject(SeciurityInPutInt(first.activeProjects() - 1))));
-
+            Integer TempInt=SeciurityInPutInt(first.activeProjects() - 1);
+            first.updateDataProjectList(project.setNewTestingHours(first.getObjectFromProject(TempInt)),TempInt);
 
         }
 

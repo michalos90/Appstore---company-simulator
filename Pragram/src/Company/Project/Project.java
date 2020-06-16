@@ -330,6 +330,10 @@ return project;
 
     }
 
+    public Project setNewTestingHours(Project project){
+        project.requiredTestDays--;
+        return project;
+    }
 
 
     @Override

@@ -64,10 +64,12 @@ public class Player extends Programer {
         myProjectList.remove(myProjectList.size()-1);
     }
 
-    public void workignDay(Project project)
+    public void updateDataProjectList(Project project, int Index)
     {
-        myProjectList.set(myProjectList.size()-1,project);
+        myProjectList.set(Index,project);
     }
+
+
 
 
 }
