@@ -38,7 +38,7 @@ public class Player extends Programer {
             System.out.println("Successful payed u have  " + this.cash);
             return true;
         } else {
-            System.out.println("U have only: " + this.cash + " for this buy u need at least: " + cash);
+            System.out.println("U have only: " + this.cash + " for this pay u need at least: " + cash);
         }
         return false;
     }
@@ -165,5 +165,111 @@ public class Player extends Programer {
     public Integer getNumberOfDealers() {
         return myDealerList.size();
     }
+
+    public void dissmisEmploye() {
+
+        numberOfEmployee();
+
+
+        dissmisMenu();
+        switch (SeciurityInPutInt(4)) {
+            case 0:
+                dissmisProgrammer();
+                break;
+            case 1:
+                dissmisDealer();
+                break;
+            case 2:
+                dissmisTester();
+                break;
+            case 3:
+                break;
+        }
+
+
+    }
+
+    public void numberOfEmployee() {
+        System.out.println("U have " + getNumberOfDealers() + " Dealers");
+        System.out.println("U have " + getNumberOfProgrammers() + " Programmers");
+        System.out.println("U have " + getNumberOfTesters() + " Testers");
+        if (getNumberOfDealers() == 0 && (getNumberOfProgrammers() == 0) && (getNumberOfTesters() == 0)) {
+            System.out.println("U don't have any Employee");
+        } else {
+            if (getNumberOfProgrammers() == 0) {
+                System.out.println("U don't have any Programmers ");
+            }
+            if (getNumberOfTesters() == 0) {
+                System.out.println("U dont Have Any Testers");
+            }
+            if (getNumberOfDealers() == 0) {
+                System.out.println("U dont Have Any Dealers");
+            }
+        }
+    }
+
+    public void dissmisMenu() {
+        System.out.println("\nWhat Employee u want to dissmis: ?");
+
+        System.out.println("0. Programmer");
+        System.out.println("1. Dealer");
+        System.out.println("2. Tester");
+        System.out.println("3. Exit");
+
+    }
+
+    public void dissmisProgrammer() {
+        if (getNumberOfProgrammers() != 0) {
+            System.out.println("Here is A List of actually hired ");
+
+            showProgramerList();
+            System.out.println(getNumberOfProgrammers() + ". Exit\nwhich one u want Dismiss?");
+            Integer tempOption = SeciurityInPutInt(getNumberOfProgrammers());
+            if (tempOption != getNumberOfProgrammers()) {
+                if (pay(myProgramerList.get(tempOption).cost/2) == true) {
+                    myProgramerList.remove(tempOption);
+                    System.out.println("Programmer Dismiss !");
+                }
+                else
+                {
+                    System.out.println("U can't Dismiss Programmer ");
+                }
+
+            }
+        } else {
+            System.out.println("U cant Dismiss someone u don't even hired");
+        }
+
+
+    }
+
+    public void dissmisTester() {
+        if (getNumberOfTesters() != 0) {
+            if (pay(1500.0) == true) {
+                myTesterList.remove(0);
+                System.out.println("Tester Dismiss !");
+            } else {
+                System.out.println("U can't Dismiss Tester ");
+            }
+        } else {
+            System.out.println("U cant Dismiss someone u don't even hired");
+        }
+    }
+
+    public void dissmisDealer() {
+        if (getNumberOfDealers() != 0) {
+            if (pay(2000.0) == true) {
+                myDealerList.remove(0);
+                System.out.println("Dealer Dismiss !");
+            } else {
+                System.out.println("U can't Dismiss Tester ");
+            }
+        } else {
+            System.out.println("U cant Dismiss someone u don't even hired");
+        }
+    }
+
 }
+
+
 

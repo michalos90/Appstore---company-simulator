@@ -95,28 +95,32 @@ public class Day extends CreateRandom {
         }
         project.showListOfProject();
         Integer sizeList = project.getSizeOfList();
+        System.out.println(sizeList+". Exit");
         System.out.println("\nAs u see u have " + sizeList + " projects available.\nWhich one will u choose?");
-
-        System.out.println("U chose project");
-        first.addToMyProjectsList(project.getAProject(SeciurityInPutInt(sizeList - 1)));
-        project.removeFromList();
-        System.out.println("*********************");
-        first.showProjectList();
+Integer tempOption=SeciurityInPutInt(sizeList );
+        if(tempOption!=sizeList){
 
 
-        System.out.println("*********************");
+            first.addToMyProjectsList(project.getAProject(tempOption));
+            project.removeFromList();
+            System.out.println("U chose project");
+            System.out.println("*********************");
+            first.showProjectList();
 
-        boolean checkingProject = project.parseSkills(first.getLastObjectFromProject(), first.skillsToProject());// checking
 
-        if (checkingProject == false) {
-            System.out.println("The Project Unsuccessful added, u need probably mobile programmer");
-            first.removeLastElementFromProjectList();
+            System.out.println("*********************");
 
-        } else {
-            System.out.println("The Project successful added\nActive Projects: " + first.activeProjects());
-            playedDays++;
+            boolean checkingProject = project.parseSkills(first.getLastObjectFromProject(), first.skillsToProject());// checking
+
+            if (checkingProject == false) {
+                System.out.println("The Project Unsuccessful added, u need probably mobile programmer");
+                first.removeLastElementFromProjectList();
+
+            } else {
+                System.out.println("The Project successful added\nActive Projects: " + first.activeProjects());
+                playedDays++;
+            }
         }
-
     }
 
     public void addPoint() {
@@ -133,9 +137,11 @@ public class Day extends CreateRandom {
             first.updateDataProjectList(project.setNewHours(first.getLastObjectFromProject()), first.activeProjects() - 1);
         } else {
             first.showProjectList();
-            System.out.println("This is Ur Projects on what one u want work ? chose");
-            Integer TempInt = SeciurityInPutInt(first.activeProjects() - 1);
-            first.updateDataProjectList(project.setNewHours(first.getObjectFromProject(TempInt)), TempInt);
+            System.out.println(first.activeProjects()+". Exit\nThis is Ur Projects on what one u want work ? chose");
+            Integer TempInt = SeciurityInPutInt(first.activeProjects() );
+            if(TempInt!= first.activeProjects()) {
+                first.updateDataProjectList(project.setNewHours(first.getObjectFromProject(TempInt)), TempInt);
+            }
 
 
         }
@@ -151,10 +157,11 @@ public class Day extends CreateRandom {
             first.updateDataProjectList(project.setNewTestingHours(first.getLastObjectFromProject()), first.activeProjects() - 1);
         } else {
             first.showProjectList();
-            System.out.println("This is Ur Projects on what one u want work ? chose");
-            Integer TempInt = SeciurityInPutInt(first.activeProjects() - 1);
-            first.updateDataProjectList(project.setNewTestingHours(first.getObjectFromProject(TempInt)), TempInt);
-
+            System.out.println(first.activeProjects()+". Exit\nThis is Ur Projects on what one u want work ? chose");
+            Integer TempInt = SeciurityInPutInt(first.activeProjects() );
+            if(TempInt!= first.activeProjects()) {
+                first.updateDataProjectList(project.setNewTestingHours(first.getObjectFromProject(TempInt)), TempInt);
+            }
         }
 
     }
@@ -170,7 +177,8 @@ public class Day extends CreateRandom {
         System.out.println("1. Tester 3000.0");
         System.out.println("2. Dealer 3000.0");
         System.out.println("3. Get a classifieds cost 5000");
-        switch (SeciurityInPutInt(4)) {
+        System.out.println("4. Exit");
+        switch (SeciurityInPutInt(5)) {
             case 0:
 
                 hireProgramer();
@@ -185,10 +193,14 @@ public class Day extends CreateRandom {
             case 3:
                 getClassifiedsPont();
                 break;
+            case 4:
+                break;
+
         }
     }
 
     public void dissmisEmploye() {
+             first.dissmisEmploye();
     }
 
     public void paperTimeDay() {
@@ -200,19 +212,21 @@ public class Day extends CreateRandom {
     public void hireProgramer() {
         programer.generateProgrammer(first.getClassifieds());
         programer.showProgramerList();
-        System.out.println("Here is a list of ur Programmer: " + "\nActually hired Programmers: " + first.sizeProgrammerList());
+        System.out.println(first.getClassifieds()+". Exit\nHere is a list of ur Programmer: " + "\nActually hired Programmers: " + first.sizeProgrammerList());
         first.showProgramerList();
         System.out.println("Which one will u chose type from 0");
         int answer = SeciurityInPutInt(first.getClassifieds());
-        first.addToMyProgrammerList(programer.getProgramer(answer));
-        if (first.payForProgrammer() == true) {
-            System.out.println("Programmer Successful hired");
-            programer.removeFromProgrammerList(answer);
-        } else {
-            System.out.println("U dont have enough money for this Programmer");
-            first.removeLastObjFromProgrammerList();
+        if(answer!=first.getClassifieds())
+        {
+            first.addToMyProgrammerList(programer.getProgramer(answer));
+            if (first.payForProgrammer() == true) {
+                System.out.println("Programmer Successful hired");
+                programer.removeFromProgrammerList(answer);
+            } else {
+                System.out.println("U dont have enough money for this Programmer");
+                first.removeLastObjFromProgrammerList();
+            }
         }
-
 
     }
 
@@ -229,6 +243,9 @@ public class Day extends CreateRandom {
         if (first.pay(5000.0) == true) {
             first.setClassifieds();
         }
+
+    }
+    public void endDay(){
 
     }
 }

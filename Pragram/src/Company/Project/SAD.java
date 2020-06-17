@@ -25,13 +25,13 @@ public class SAD extends CreateRandom {
 
         for (int i = 0; i < number; i++) {
             if (SADList.size() == 0) {
-                SADList.add(new SAD(generateSkill(), randomInt(days + 1)));
+                SADList.add(new SAD(generateSkill(), randomInt(days )+1));
             } else {
                 String value;
                 do {
                     value = generateSkill();
                 } while (generateUniqueSkills(value) == true);
-                SADList.add(new SAD(value, randomInt(days + 1)));
+                SADList.add(new SAD(value, randomInt(days )+1));
             }
 
 
@@ -97,7 +97,7 @@ public class SAD extends CreateRandom {
     }
 
     public SAD[] workDay(SAD[] tab) {
-        //SkillAndDays[];
+
         Integer[] tempInttab = IntTab(fromSkillAndDaysTabToString(tab));
         String[] tempStrintab = stringTab(fromSkillAndDaysTabToString(tab));
         Integer size = fromSkillAndDaysTabToString(tab).size();
@@ -107,7 +107,7 @@ public class SAD extends CreateRandom {
             System.out.println(i + ". " + tempInttab[i] + " " + tempStrintab[i]);
         }
         System.out.println("On What Technology u will work? type form 0");
-        tempInttab[SeciurityInPutInt(size)]--;
+        tempInttab[SeciurityInPutInt(size-1)]--;
         return returnToSADtab(tempInttab, tempStrintab, size);
     }
 
