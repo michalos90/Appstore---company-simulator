@@ -3,6 +3,7 @@ package Company.Project;
 import Company.CreateRandom;
 import Company.Human.Client;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -23,9 +24,9 @@ public class Project extends CreateRandom {
     boolean isPently;
     Double realPrice;
     Integer requiredTestDays;
-    Integer dateOfCommissioning;
+    LocalDate dateOfCommissioning;
     Client client = new Client();
-    SAD SAD = new SAD();
+    SAD sad = new SAD();
 
     public Project(String nName,
                    String nNameClient,
@@ -40,7 +41,7 @@ public class Project extends CreateRandom {
                    boolean nIsPently,
                    Double nRealPrice,
                    Integer nRequiredTestDays,
-                   Integer nDateOfCommissioning
+                   LocalDate nDateOfCommissioning
     ) {
         this.name = nName;
         this.nameClient = nNameClient;
@@ -65,22 +66,22 @@ public class Project extends CreateRandom {
 
     }
 
-    public void generateProject(Integer skills, Integer days) {
+    public void generateProject(Integer skills, Integer days, LocalDate acctualDay) {
         client.checkClientList();
-        SAD.createSkillAndDaysList(skills, days);
+        sad.createSkillAndDaysList(skills, days);
         Integer number = randomInt(33);
-        Integer mDays = SAD.getDaysFromList() - SAD.getDaysFromList() * randomInt(25) / 100;
+        Integer mDays = sad.getDaysFromList() - sad.getDaysFromList() * randomInt(25) / 100;
         Integer ClientPayDay = getClientPayDay(mDays, client.getTypeFromList(number));
         boolean Pently = chance(client.getTypeFromList(number));
         Integer TypeClient = client.getTypeFromList(number);
         String ClientName = client.getNameClientFromList(number);
-        String Complexity = setComplexityInList(SAD.copyList());
+        String Complexity = setComplexityInList(sad.copyList());
         Integer RequiredTestDays = mDays / 3;
-        Double Price = SAD.setPriceOnList() + (RequiredTestDays * 450);//+
+        Double Price = sad.setPriceOnList() + (RequiredTestDays * 450);//+
         Double RealPrice = getRealPrice(Price, TypeClient);
         Double ValueOfPently = RealPrice * randomInt(5) / 100;
-        Integer DateOfCommissioning = ClientPayDay - randomInt(7);
-        SAD[] TempTab = SAD.returSkillAndDays();
+        LocalDate DateOfCommissioning = acctualDay.plusDays((mDays / 5) * 7);
+        SAD[] TempTab = sad.returSkillAndDays();
 
 
         listOfProject.add(new Project(generateProjectName(),
@@ -104,11 +105,11 @@ public class Project extends CreateRandom {
 
     }
 
-    public void numberOfProjects(Integer skills, Integer days) {
-        generateProject(skills, days);
+    public void numberOfProjects(Integer skills, Integer days, LocalDate acctualDay) {
+        generateProject(skills, days, acctualDay);
     }
 
-    public void createProjectList(Integer point) {
+    public void createProjectList(Integer point, LocalDate acctualDay) {
         Integer number;
         Integer days;
         if (point < 30) {
@@ -117,9 +118,9 @@ public class Project extends CreateRandom {
                 if (point % 5 == 0) {
                     if (
                             randomInt(2) >= 1) {
-                        numberOfProjects(1, days);
+                        numberOfProjects(1, days, acctualDay);
                     } else {
-                        numberOfProjects(2, days);
+                        numberOfProjects(2, days, acctualDay);
                     }
 
                 }
@@ -132,12 +133,12 @@ public class Project extends CreateRandom {
 
                     number = randomInt(100);
                     if (number < 20) {
-                        numberOfProjects(3, days);
+                        numberOfProjects(3, days, acctualDay);
 
                     } else if (number >= 20 && number < 60) {
-                        numberOfProjects(2, days);
+                        numberOfProjects(2, days, acctualDay);
                     } else {
-                        numberOfProjects(1, days);
+                        numberOfProjects(1, days, acctualDay);
                     }
                 }
                 point = point - 1;
@@ -149,14 +150,14 @@ public class Project extends CreateRandom {
 
                     number = randomInt(100);
                     if (number < 10) {
-                        numberOfProjects(4, days);
+                        numberOfProjects(4, days, acctualDay);
 
                     } else if (number >= 10 && number < 30) {
-                        numberOfProjects(3, days);
+                        numberOfProjects(3, days, acctualDay);
                     } else if (number >= 30 && number < 65) {
-                        numberOfProjects(2, days);
+                        numberOfProjects(2, days, acctualDay);
                     } else {
-                        numberOfProjects(1, days);
+                        numberOfProjects(1, days, acctualDay);
                     }
                 }
                 point = point - 1;
@@ -168,15 +169,15 @@ public class Project extends CreateRandom {
 
                     number = randomInt(100);
                     if (number < 5) {
-                        numberOfProjects(5, days);
+                        numberOfProjects(5, days, acctualDay);
                     } else if (number >= 5 && number < 15) {
-                        numberOfProjects(4, days);
+                        numberOfProjects(4, days, acctualDay);
                     } else if (number >= 15 && number < 50) {
-                        numberOfProjects(3, days);
+                        numberOfProjects(3, days, acctualDay);
                     } else if (number >= 50 && number < 80) {
-                        numberOfProjects(2, days);
+                        numberOfProjects(2, days, acctualDay);
                     } else {
-                        numberOfProjects(1, days);
+                        numberOfProjects(1, days, acctualDay);
                     }
                 }
                 point = point - 1;
@@ -189,17 +190,17 @@ public class Project extends CreateRandom {
 
                     number = randomInt(100);
                     if (number < 20) {
-                        numberOfProjects(6, days);
+                        numberOfProjects(6, days, acctualDay);
                     } else if (number >= 20 && number < 40) {
-                        numberOfProjects(5, days);
+                        numberOfProjects(5, days, acctualDay);
                     } else if (number >= 40 && number < 60) {
-                        numberOfProjects(4, days);
+                        numberOfProjects(4, days, acctualDay);
                     } else if (number >= 60 && number < 80) {
-                        numberOfProjects(3, days);
+                        numberOfProjects(3, days, acctualDay);
                     } else if (number >= 80 && number < 90) {
-                        numberOfProjects(2, days);
+                        numberOfProjects(2, days, acctualDay);
                     } else {
-                        numberOfProjects(1, days);
+                        numberOfProjects(1, days, acctualDay);
                     }
                 }
                 point = point - 1;
@@ -212,17 +213,17 @@ public class Project extends CreateRandom {
 
                     number = randomInt(100);
                     if (number < 5) {
-                        numberOfProjects(6, days);
+                        numberOfProjects(6, days, acctualDay);
                     } else if (number >= 5 && number < 15) {
-                        numberOfProjects(5, days);
+                        numberOfProjects(5, days, acctualDay);
                     } else if (number >= 15 && number < 40) {
-                        numberOfProjects(4, days);
+                        numberOfProjects(4, days, acctualDay);
                     } else if (number >= 40 && number < 65) {
-                        numberOfProjects(3, days);
+                        numberOfProjects(3, days, acctualDay);
                     } else if (number >= 65 && number < 90) {
-                        numberOfProjects(2, days);
+                        numberOfProjects(2, days, acctualDay);
                     } else {
-                        numberOfProjects(1, days);
+                        numberOfProjects(1, days, acctualDay);
                     }
                 }
                 point = point - 1;
@@ -234,7 +235,7 @@ public class Project extends CreateRandom {
                 if (point % 5 == 0) {
 
 
-                    numberOfProjects(6, days);
+                    numberOfProjects(6, days, acctualDay);
 
                 }
                 point = point - 1;
@@ -319,13 +320,13 @@ public class Project extends CreateRandom {
 
     public boolean parseSkills(Project project, String[] Tab) {
         SAD[] tab = fromProjectToSADtab(project);
-        return SAD.parseSkills(tab, Tab);
+        return sad.parseSkills(tab, Tab);
     }
 
     public Project setNewHours(Project project) {
 
         SAD[] tab = fromProjectToSADtab(project);
-        project.listSADtab = SAD.workDay(tab);
+        project.listSADtab = sad.workDay(tab);
         return project;
 
     }
@@ -333,6 +334,16 @@ public class Project extends CreateRandom {
     public Project setNewTestingHours(Project project) {
         project.requiredTestDays--;
         return project;
+    }
+
+    public Integer checkProjectStatusSkills(Project project) {
+        SAD[] tab = fromProjectToSADtab(project);
+        return sad.checkStatus(tab);
+
+    }
+
+    public Integer getRequiredTestDays(Project project) {
+        return project.requiredTestDays;
     }
 
 

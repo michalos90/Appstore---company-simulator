@@ -25,13 +25,13 @@ public class SAD extends CreateRandom {
 
         for (int i = 0; i < number; i++) {
             if (SADList.size() == 0) {
-                SADList.add(new SAD(generateSkill(), randomInt(days )+1));
+                SADList.add(new SAD(generateSkill(), randomInt(days) + 1));
             } else {
                 String value;
                 do {
                     value = generateSkill();
                 } while (generateUniqueSkills(value) == true);
-                SADList.add(new SAD(value, randomInt(days )+1));
+                SADList.add(new SAD(value, randomInt(days) + 1));
             }
 
 
@@ -97,18 +97,31 @@ public class SAD extends CreateRandom {
     }
 
     public SAD[] workDay(SAD[] tab) {
+        Integer[] tempInttab = IntTab(fromSkillAndDaysTabToString(tab));
+        String[] tempStrintab = stringTab(fromSkillAndDaysTabToString(tab));
+        Integer size = fromSkillAndDaysTabToString(tab).size();
+        System.out.println("On What Technology u will work? type form 0");
+        Integer tempOption = SeciurityInPutInt(size - 1);
+        tempInttab[tempOption]--;
+        return returnToSADtab(tempInttab, tempStrintab, size);
+    }
 
+    public Integer checkStatus(SAD[] tab) {
         Integer[] tempInttab = IntTab(fromSkillAndDaysTabToString(tab));
         String[] tempStrintab = stringTab(fromSkillAndDaysTabToString(tab));
         Integer size = fromSkillAndDaysTabToString(tab).size();
 
-
+        Integer allHours = 0;
         for (int i = 0; i < size; i++) {
-            System.out.println(i + ". " + tempInttab[i] + " " + tempStrintab[i]);
+            if (tempInttab[i] == 0) {
+                System.out.println(i + ". Technology: " + tempStrintab[i] + " Finished");
+            } else {
+                System.out.println(i + ". Technology:  " + tempStrintab[i] + " hours: " + tempInttab[i]);
+            }
+            allHours = allHours + tempInttab[i];
         }
-        System.out.println("On What Technology u will work? type form 0");
-        tempInttab[SeciurityInPutInt(size-1)]--;
-        return returnToSADtab(tempInttab, tempStrintab, size);
+        return allHours;
+
     }
 
     public SAD[] returnToSADtab(Integer[] itab, String[] stab, Integer size) {

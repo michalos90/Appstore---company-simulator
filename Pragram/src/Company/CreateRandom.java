@@ -231,6 +231,7 @@ public class CreateRandom {
     public Integer SeciurityInPutInt(int max) {
         Integer number;
         do {
+            System.out.println("Enter a number between 0 and " + max);
             number = scan.nextInt();
         } while (number < 0 || number > max);
         return number;

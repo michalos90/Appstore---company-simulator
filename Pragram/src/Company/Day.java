@@ -4,33 +4,19 @@ package Company;
 import Company.Human.*;
 import Company.Project.Project;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 
 public class Day extends CreateRandom {
-    LocalDate day = LocalDate.of(2020, 1, 1);
     Integer playedDays = 1;
-    DayOfWeek dayOfWeek = day.getDayOfWeek();
+    LocalDate day = LocalDate.ofYearDay(2020, playedDays);
+
+
     LocalDate conctractDay;
     Programer programer = new Programer();
     Player first = new Player("Michał", "Szyc");
     Project project = new Project();
     Friend friend = new Friend();
-    Human human = new Human();
 
-    public void Today() {
-        System.out.println("Hello Today is  " + day + " " + dayOfWeek);
-
-    }
-
-    public void viewDate(LocalDate date) {
-        System.out.println(date);
-    }
-
-    public DayOfWeek getDay() {
-
-        return this.day.getDayOfWeek();
-    }
 
     public void firstDay() {
         friend.generateFriend();
@@ -38,6 +24,9 @@ public class Day extends CreateRandom {
     }
 
     public void workTime() {
+        if (playedDays == 1) {
+            firstDay();
+        }
         if (first.getCash() == 0.0) {
             System.out.println("Game Over U are Bankrupt");
 
@@ -52,25 +41,24 @@ public class Day extends CreateRandom {
             System.out.println("6. Hire a new employee");
             System.out.println("7. Dismiss an employee");
             System.out.println("8. Paper Time (you need at least 2 a month to not lose)");
-            Option(SeciurityInPutInt(8));
+            System.out.println("9. Show my Lists");
+            Option(SeciurityInPutInt(9));
         }
-
-
     }
 
     public void Option(Integer option) {
         switch (option) {
             case 1:
-                signAContract();
+                if (signAContract() == true) endDay();
                 break;
             case 2:
                 addPoint();
                 break;
             case 3:
-                programmingDay();
+                if (programmingDay() == true) endDay();
                 break;
             case 4:
-                testUrApp();
+                if (testUrApp() == true) endDay();
                 break;
             case 5:
                 handOverTheFinishedProject();
@@ -84,21 +72,36 @@ public class Day extends CreateRandom {
             case 8:
                 paperTimeDay();
                 break;
-
-
+            case 9:
+                schowLists();
         }
     }
 
-    public void signAContract() {
+    public void schowLists() {
+        System.out.println("****************");
+        System.out.println("Active Project List: " + first.activeProjects());
+        first.showProjectList();
+        System.out.println("****************");
+        System.out.println("****************");
+        System.out.println("Finished project List:");
+        first.showFinishedProject();
+        System.out.println("****************");
+        System.out.println("****************");
+        first.showProgramerList();
+
+    }
+
+    public boolean signAContract() {
         if (project.getSizeOfList() == 0) {
-            project.createProjectList(first.getPoints());
+            project.createProjectList(first.getPoints(), day);
         }
         project.showListOfProject();
         Integer sizeList = project.getSizeOfList();
-        System.out.println(sizeList+". Exit");
+        System.out.println(sizeList + ". Exit");
+        System.out.println("U have " + first.getPoints() + " points, more points= bigger projects");
         System.out.println("\nAs u see u have " + sizeList + " projects available.\nWhich one will u choose?");
-Integer tempOption=SeciurityInPutInt(sizeList );
-        if(tempOption!=sizeList){
+        Integer tempOption = SeciurityInPutInt(sizeList);
+        if (tempOption != sizeList) {
 
 
             first.addToMyProjectsList(project.getAProject(tempOption));
@@ -116,79 +119,138 @@ Integer tempOption=SeciurityInPutInt(sizeList );
                 System.out.println("The Project Unsuccessful added, u need probably mobile programmer");
                 first.removeLastElementFromProjectList();
 
+
             } else {
                 System.out.println("The Project successful added\nActive Projects: " + first.activeProjects());
-                playedDays++;
+                return true;
             }
         }
+        return false;
     }
 
     public void addPoint() {
         first.addPoint();
+        endDay();
     }
 
-    public void programmingDay() {
+    public boolean programmingDay() {
         if (first.activeProjects() == 0) {
             System.out.println("Its look like u don't have any project sign a somone");
-            signAContract();
+            if (signAContract() == true) endDay();
         } else if (first.activeProjects() == 1) {
             System.out.println("Its Look Like u have only one project to work and u will be work on this project: ");
             first.showProjectList();
-            first.updateDataProjectList(project.setNewHours(first.getLastObjectFromProject()), first.activeProjects() - 1);
+            Project tempObj = first.getLastObjectFromProject();
+            Integer tempInt = checkProjectStatusSkills(tempObj);
+            checkProjectStatus(tempInt, checkProjectStatusTest(tempObj), tempObj);
+            if (tempInt != 0) {
+                first.updateDataProjectList(project.setNewHours(tempObj), first.activeProjects() - 1);
+                return true;
+            } else {
+                System.out.println("\nU cant work on this project because is finished");
+            }
+
         } else {
             first.showProjectList();
-            System.out.println(first.activeProjects()+". Exit\nThis is Ur Projects on what one u want work ? chose");
-            Integer TempInt = SeciurityInPutInt(first.activeProjects() );
-            if(TempInt!= first.activeProjects()) {
-                first.updateDataProjectList(project.setNewHours(first.getObjectFromProject(TempInt)), TempInt);
+            System.out.println(first.activeProjects() + ". Exit\nThis is Ur Projects on what one u want work ? chose");
+            Integer TempInt = SeciurityInPutInt(first.activeProjects());
+            if (TempInt != first.activeProjects()) {
+                Project tempObj = first.getProject(TempInt);
+                Integer tempInt = checkProjectStatusSkills(tempObj);
+                checkProjectStatus(tempInt, checkProjectStatusTest(tempObj), tempObj);
+                if (tempInt != 0) {
+                    first.updateDataProjectList(project.setNewHours(first.getProject(TempInt)), TempInt);
+                    return true;
+                } else {
+                    System.out.println("\nU cant work on this project because is finished");
+                }
+
             }
 
 
         }
+        return false;
     }
 
-    public void testUrApp() {
+    public Integer checkProjectStatusSkills(Project object) {
+        Integer tempInt = project.checkProjectStatusSkills(object);
+
+
+        return tempInt;
+    }
+
+    public Integer checkProjectStatusTest(Project object) {
+
+        Integer tempInt = project.getRequiredTestDays(object);
+
+
+        return tempInt;
+    }
+
+    public void checkProjectStatus(Integer days, Integer test, Project object) {
+
+        if ((days == 0) && (test == 0)) {
+            first.addFinishedProject(object);
+            first.showFinishedProject();
+            first.removeProject(object);
+        }
+        Integer tempInt = days + test;
+        System.out.println("This project have " + tempInt + " Working days");
+
+
+    }
+
+    public boolean testUrApp() {
         if (first.activeProjects() == 0) {
             System.out.println("Its look like u don't have any project sign a somone");
-            signAContract();
+            if (signAContract() == true) endDay();
         } else if (first.activeProjects() == 1) {
             System.out.println("Its Look Like u have only one project to work and u will be work on this project: ");
             first.showProjectList();
-            first.updateDataProjectList(project.setNewTestingHours(first.getLastObjectFromProject()), first.activeProjects() - 1);
+            Project tempObj = first.getLastObjectFromProject();
+            Integer tempInt = checkProjectStatusTest(tempObj);
+            checkProjectStatus(checkProjectStatusSkills(tempObj), tempInt, tempObj);
+            if (tempInt != 0) {
+                first.updateDataProjectList(project.setNewTestingHours(tempObj), first.activeProjects() - 1);
+                return true;
+            }
         } else {
             first.showProjectList();
-            System.out.println(first.activeProjects()+". Exit\nThis is Ur Projects on what one u want work ? chose");
-            Integer TempInt = SeciurityInPutInt(first.activeProjects() );
-            if(TempInt!= first.activeProjects()) {
-                first.updateDataProjectList(project.setNewTestingHours(first.getObjectFromProject(TempInt)), TempInt);
+            System.out.println(first.activeProjects() + ". Exit\nThis is Ur Projects on what one u want work ? chose");
+            Integer TempInt = SeciurityInPutInt(first.activeProjects());
+            if (TempInt != first.activeProjects()) {
+                Project tempObj = first.getProject(TempInt);
+                Integer tempInt = checkProjectStatusTest(tempObj);
+                checkProjectStatus(checkProjectStatusSkills(tempObj), tempInt, tempObj);
+
+                if (tempInt != 0) {
+                    first.updateDataProjectList(project.setNewTestingHours(first.getProject(TempInt)), TempInt);
+                    return true;
+                }
+
+
             }
         }
+        return false;
+    }
 
+    public void handOverTheFinishedProject() {
+        System.out.println();
     }
 
     public void hireAnEmployee() {
-        System.out.println("U have: " + first.getClassifieds() + " classifieds points u can have more but each one cost 5000$");
-        System.out.println("U have actually: " + first.getCash() + " $");
-        System.out.println("Testers: " + first.getNumberOfTesters());
-        System.out.println("Programmers: " + first.getNumberOfProgrammers());
-        System.out.println("Dealers: " + first.getNumberOfDealers());
-        System.out.println("Which one Employee u need to hire?or u want see more Employees");
-        System.out.println("0. Programer");
-        System.out.println("1. Tester 3000.0");
-        System.out.println("2. Dealer 3000.0");
-        System.out.println("3. Get a classifieds cost 5000");
-        System.out.println("4. Exit");
+        first.hireEmployee();
         switch (SeciurityInPutInt(5)) {
             case 0:
 
-                hireProgramer();
+                if (first.hireProgramer() == true) endDay();
                 break;
 
             case 1:
-                hireTester();
+                if (first.hireTester() == true) endDay();
                 break;
             case 2:
-                hireDealer();
+                if (first.hireDealer() == true) endDay();
                 break;
             case 3:
                 getClassifiedsPont();
@@ -199,45 +261,6 @@ Integer tempOption=SeciurityInPutInt(sizeList );
         }
     }
 
-    public void dissmisEmploye() {
-             first.dissmisEmploye();
-    }
-
-    public void paperTimeDay() {
-    }
-
-    public void handOverTheFinishedProject() {
-    }
-
-    public void hireProgramer() {
-        programer.generateProgrammer(first.getClassifieds());
-        programer.showProgramerList();
-        System.out.println(first.getClassifieds()+". Exit\nHere is a list of ur Programmer: " + "\nActually hired Programmers: " + first.sizeProgrammerList());
-        first.showProgramerList();
-        System.out.println("Which one will u chose type from 0");
-        int answer = SeciurityInPutInt(first.getClassifieds());
-        if(answer!=first.getClassifieds())
-        {
-            first.addToMyProgrammerList(programer.getProgramer(answer));
-            if (first.payForProgrammer() == true) {
-                System.out.println("Programmer Successful hired");
-                programer.removeFromProgrammerList(answer);
-            } else {
-                System.out.println("U dont have enough money for this Programmer");
-                first.removeLastObjFromProgrammerList();
-            }
-        }
-
-    }
-
-    public void hireTester() {
-        first.addTester();
-    }
-
-    public void hireDealer() {
-        first.addDealer();
-    }
-
     public void getClassifiedsPont() {
 
         if (first.pay(5000.0) == true) {
@@ -245,8 +268,18 @@ Integer tempOption=SeciurityInPutInt(sizeList );
         }
 
     }
-    public void endDay(){
 
+    public void dissmisEmploye() {
+        first.dissmisEmploye();
+    }
+
+    public void paperTimeDay() {
+    }
+
+    public void endDay() {
+        playedDays++;
+
+        day = LocalDate.ofYearDay(2020, playedDays);
     }
 }
 

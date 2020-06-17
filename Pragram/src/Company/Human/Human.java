@@ -22,6 +22,6 @@ public class Human extends CreateRandom {
     }
 
     public Human generateDealer() {
-        return new Human(generateName(), generateLastName(), 4000.0);
+        return new Human(generateName(), generateLastName(), 3500.0);
     }
 }

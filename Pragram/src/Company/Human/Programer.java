@@ -29,7 +29,6 @@ public class Programer extends Human {
     public void showProgramerList() {
         Integer i = 0;
         for (Programer item : programerList) {
-
             System.out.println(i + ". " + item);
             i++;
         }
@@ -42,7 +41,6 @@ public class Programer extends Human {
     @Override
     public String toString() {
         return
-
                 "firstName =" + firstName +
                         ", lastName =" + lastName +
                         ", skills =" + Arrays.toString(skills) +

@@ -12,9 +12,9 @@ public class Player extends Programer {
     List<Friend> myFriendList = new LinkedList<>();
     List<Human> myTesterList = new LinkedList<>();
     Double cash = 20000.0;
-    Integer lookingPoints = 15 + myDealerList.size();
-    Integer programingPoint = 1 + myProgramerList.size();
+    Integer lookingPoints = 15;
     Integer classifieds = 3;
+    List<Project> finishedProjects = new LinkedList<>();
 
     public Player(String name, String surname) {
         this.firstName = name;
@@ -48,7 +48,7 @@ public class Player extends Programer {
     }
 
     public Integer getPoints() {
-        return lookingPoints;
+        return lookingPoints + myDealerList.size();
     }
 
     public Integer getClassifieds() {
@@ -73,7 +73,7 @@ public class Player extends Programer {
         }
     }
 
-    public Project getObjectFromProject(Integer number) {
+    public Project getProject(Integer number) {
         return myProjectList.get(number);
     }
 
@@ -87,6 +87,14 @@ public class Player extends Programer {
 
     public void removeLastElementFromProjectList() {
         myProjectList.remove(myProjectList.size() - 1);
+    }
+
+    public void removeLastObjFromProgrammerList() {
+        myProgramerList.remove(myProjectList.size() - 1);
+    }
+
+    public void removeProject(Project project) {
+        myProjectList.remove(project);
     }
 
     public int sizeProgrammerList() {
@@ -115,7 +123,7 @@ public class Player extends Programer {
         return myProgramerList.get(myProgramerList.size() - 1);
     }
 
-    public void showProgramerList() {
+    public void showMyProgramerList() {
         for (Programer item : myProgramerList) {
             System.out.println(item);
         }
@@ -129,29 +137,55 @@ public class Player extends Programer {
         return false;
     }
 
-    public void removeLastObjFromProgrammerList() {
-        myProgramerList.remove(myProjectList.size() - 1);
+
+    public boolean hireProgramer() {
+        generateProgrammer(getClassifieds());
+        showProgramerList();
+        System.out.println(getClassifieds() + ". Exit\nHere is a list of ur Programmer: " + "\nActually hired Programmers: " + sizeProgrammerList());
+        showMyProgramerList();
+        System.out.println("Which one will u chose type from 0");
+        int answer = SeciurityInPutInt(getClassifieds());
+        if (answer != getClassifieds()) {
+            addToMyProgrammerList(getProgramer(answer));
+            if (payForProgrammer() == true) {
+                System.out.println("Programmer Successful hired");
+                removeFromProgrammerList(answer);
+                return true;
+            } else {
+                System.out.println("U dont have enough money for this Programmer");
+                removeLastObjFromProgrammerList();
+            }
+        }
+        return false;
     }
 
-    public void addTester() {
+    public boolean hireTester() {
         myTesterList.add(generateTester());
         Human tempObj = myTesterList.get(myTesterList.size() - 1);
         if (pay(tempObj.cost) == true) {
             System.out.println("U have now " + myTesterList.size() + " Testers");
+            return true;
         } else {
             myTesterList.remove(tempObj);
-        }
 
+        }
+        return false;
     }
 
-    public void addDealer() {
+    public boolean hireDealer() {
         myDealerList.add(generateDealer());
         Human tempObj = myDealerList.get(myDealerList.size() - 1);
         if (pay(tempObj.cost) == true) {
             System.out.println("U have now " + myDealerList.size() + " Dealers");
+            return true;
         } else {
             myDealerList.remove(tempObj);
         }
+        return false;
+    }
+
+    public void addFinishedProject(Project project) {
+        finishedProjects.add(project);
     }
 
     public Integer getNumberOfTesters() {
@@ -226,12 +260,10 @@ public class Player extends Programer {
             System.out.println(getNumberOfProgrammers() + ". Exit\nwhich one u want Dismiss?");
             Integer tempOption = SeciurityInPutInt(getNumberOfProgrammers());
             if (tempOption != getNumberOfProgrammers()) {
-                if (pay(myProgramerList.get(tempOption).cost/2) == true) {
+                if (pay(myProgramerList.get(tempOption).cost / 2) == true) {
                     myProgramerList.remove(tempOption);
                     System.out.println("Programmer Dismiss !");
-                }
-                else
-                {
+                } else {
                     System.out.println("U can't Dismiss Programmer ");
                 }
 
@@ -269,6 +301,25 @@ public class Player extends Programer {
         }
     }
 
+    public void hireEmployee() {
+        System.out.println("U have: " + getClassifieds() + " classifieds points u can have more but each one cost 5000$");
+        System.out.println("U have actually: " + getCash() + " $");
+        System.out.println("Testers: " + getNumberOfTesters());
+        System.out.println("Programmers: " + getNumberOfProgrammers());
+        System.out.println("Dealers: " + getNumberOfDealers());
+        System.out.println("Which one Employee u need to hire?or u want see more Employees");
+        System.out.println("0. Programer");
+        System.out.println("1. Tester 3000.0");
+        System.out.println("2. Dealer 3500.0");
+        System.out.println("3. Get a classifieds cost 5000");
+        System.out.println("4. Exit");
+    }
+
+    public void showFinishedProject() {
+        for (Project item : finishedProjects) {
+            System.out.println(item);
+        }
+    }
 }
 
 
