@@ -17,14 +17,18 @@ public class Project extends CreateRandom {
     Double price;
     Double amount_Of_Penalty;
     String complexity;
-    Integer payDay;
+    LocalDate payDay;
     Integer clientId;
     Integer clientType;
-    Integer clientPayDay;
+    LocalDate realPayDay;
     boolean isPently;
     Double realPrice;
     Integer requiredTestDays;
     LocalDate dateOfCommissioning;
+    LocalDate realDateOfCommissioning;
+    boolean isFinished;
+    boolean iGotMoney;
+    boolean payed;
     Client client = new Client();
     SAD sad = new SAD();
 
@@ -34,14 +38,19 @@ public class Project extends CreateRandom {
                    String nComplexity,
                    Integer nClientId,
                    Double nAmount_Of_Penalty,
-                   Integer nPayDay,
+                   LocalDate nPayDay,
                    SAD[] tab,
                    Integer nClientType,
-                   Integer nClientPayDay,
+                   LocalDate nClientPayDay,
                    boolean nIsPently,
                    Double nRealPrice,
                    Integer nRequiredTestDays,
-                   LocalDate nDateOfCommissioning
+                   LocalDate nDateOfCommissioning,
+                   boolean nIsFinished,
+                   boolean nIGotMoney,
+                   boolean nPayed,
+                   LocalDate nRealDateOfCommissioning
+
     ) {
         this.name = nName;
         this.nameClient = nNameClient;
@@ -53,35 +62,41 @@ public class Project extends CreateRandom {
         this.listSADtab = new SAD[6];
         this.listSADtab = tab;
         this.clientType = nClientType;
-        this.clientPayDay = nClientPayDay;
+        this.realPayDay = nClientPayDay;
         this.isPently = nIsPently;
         this.realPrice = nRealPrice;
         this.requiredTestDays = nRequiredTestDays;
         this.dateOfCommissioning = nDateOfCommissioning;
+        this.isFinished = nIsFinished;
+        this.iGotMoney = nIGotMoney;
+        this.payed = nPayed;
+        this.realDateOfCommissioning = nRealDateOfCommissioning;
     }
 
     List<Project> listOfProject = new LinkedList<>();
 
     public Project() {
-
     }
 
     public void generateProject(Integer skills, Integer days, LocalDate acctualDay) {
         client.checkClientList();
         sad.createSkillAndDaysList(skills, days);
         Integer number = randomInt(33);
-        Integer mDays = sad.getDaysFromList() - sad.getDaysFromList() * randomInt(25) / 100;
-        Integer ClientPayDay = getClientPayDay(mDays, client.getTypeFromList(number));
+        Integer tempInt = sad.getDaysFromList() - sad.getDaysFromList() * randomInt(25) / 100;
+        LocalDate PayDay = acctualDay.plusDays(tempInt);
+        LocalDate RealPayDay = acctualDay.plusDays(getClientPayDay(tempInt, client.getTypeFromList(number)));
         boolean Pently = chance(client.getTypeFromList(number));
         Integer TypeClient = client.getTypeFromList(number);
         String ClientName = client.getNameClientFromList(number);
         String Complexity = setComplexityInList(sad.copyList());
-        Integer RequiredTestDays = mDays / 3;
+        Integer RequiredTestDays = tempInt / 3;
         Double Price = sad.setPriceOnList() + (RequiredTestDays * 450);//+
         Double RealPrice = getRealPrice(Price, TypeClient);
         Double ValueOfPently = RealPrice * randomInt(5) / 100;
-        LocalDate DateOfCommissioning = acctualDay.plusDays((mDays / 5) * 7);
+        LocalDate DateOfCommissioning = acctualDay.plusDays((tempInt / 5) * 7);
         SAD[] TempTab = sad.returSkillAndDays();
+        boolean TempBool = iGotMoney(TypeClient);
+        LocalDate RealDateOfCommissioning = getRealDateOfCommissioning(DateOfCommissioning);
 
 
         listOfProject.add(new Project(generateProjectName(),
@@ -90,19 +105,36 @@ public class Project extends CreateRandom {
                 Complexity,
                 number,
                 ValueOfPently,
-                mDays,
+                PayDay,
                 TempTab,
                 TypeClient,
-                ClientPayDay,
+                RealPayDay,
                 Pently,
                 RealPrice,
                 RequiredTestDays,
-                DateOfCommissioning
+                DateOfCommissioning,
+                false,
+                TempBool,
+                false,
+                RealDateOfCommissioning));
+    }
 
-
-        ));
-
-
+    public String setComplexityInList(List<SAD> list) {
+        String value = "";
+        switch (list.size()) {
+            case 1:
+                value = "easy";
+                break;
+            case 2:
+                value = "medium";
+                break;
+            case 3:
+                value = "hard";
+                break;
+            default:
+                value = "hard";
+        }
+        return value;
     }
 
     public void numberOfProjects(Integer skills, Integer days, LocalDate acctualDay) {
@@ -122,7 +154,6 @@ public class Project extends CreateRandom {
                     } else {
                         numberOfProjects(2, days, acctualDay);
                     }
-
                 }
                 point = point - 1;
             } while (point > 0);
@@ -130,11 +161,9 @@ public class Project extends CreateRandom {
             days = 40;
             do {
                 if (point % 5 == 0) {
-
                     number = randomInt(100);
                     if (number < 20) {
                         numberOfProjects(3, days, acctualDay);
-
                     } else if (number >= 20 && number < 60) {
                         numberOfProjects(2, days, acctualDay);
                     } else {
@@ -147,11 +176,9 @@ public class Project extends CreateRandom {
             days = 50;
             do {
                 if (point % 5 == 0) {
-
                     number = randomInt(100);
                     if (number < 10) {
                         numberOfProjects(4, days, acctualDay);
-
                     } else if (number >= 10 && number < 30) {
                         numberOfProjects(3, days, acctualDay);
                     } else if (number >= 30 && number < 65) {
@@ -166,7 +193,6 @@ public class Project extends CreateRandom {
             days = 75;
             do {
                 if (point % 5 == 0) {
-
                     number = randomInt(100);
                     if (number < 5) {
                         numberOfProjects(5, days, acctualDay);
@@ -182,12 +208,10 @@ public class Project extends CreateRandom {
                 }
                 point = point - 1;
             } while (point > 0);
-
         } else if (point >= 180 && point < 360) {
             days = 100;
             do {
                 if (point % 5 == 0) {
-
                     number = randomInt(100);
                     if (number < 20) {
                         numberOfProjects(6, days, acctualDay);
@@ -205,12 +229,10 @@ public class Project extends CreateRandom {
                 }
                 point = point - 1;
             } while (point > 0);
-
         } else if (point >= 360 && point < 500) {
             days = 150;
             do {
                 if (point % 5 == 0) {
-
                     number = randomInt(100);
                     if (number < 5) {
                         numberOfProjects(6, days, acctualDay);
@@ -233,35 +255,15 @@ public class Project extends CreateRandom {
             days = 150;
             do {
                 if (point % 5 == 0) {
-
-
                     numberOfProjects(6, days, acctualDay);
-
                 }
                 point = point - 1;
             } while (point > 0);
-
         }
-
-
     }
 
-    public String setComplexityInList(List<SAD> list) {
-        String value = "";
-        switch (list.size()) {
-            case 1:
-                value = "easy";
-                break;
-            case 2:
-                value = "medium";
-                break;
-            case 3:
-                value = "hard";
-                break;
-            default:
-                value = "hard";
-        }
-        return value;
+    public void removeFromList() {
+        listOfProject.clear();
     }
 
     public void showListOfProject() {
@@ -272,50 +274,27 @@ public class Project extends CreateRandom {
         }
     }
 
+    public boolean iGotMoney(Integer clienttype) {
+        if (clienttype == 3) {
+            return false;
+        }
+        if (randomInt(100) > 50 && clienttype == 2) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     public boolean chance(Integer Type) {
-
-        boolean value = true;
-
+        boolean value = false;
         if (randomInt(100) <= 20 && Type == 1) {
-            value = false;
-        }
-        return value;
-
-
-    }
-
-    public Integer getClientPayDay(Integer days, Integer Type) {
-        Integer value = days;
-        if (randomInt(100) <= 30 && (Type == 1 || Type == 3)) {
-            value = value + 5;
+            value = true;
         }
         return value;
     }
 
-    public Double getRealPrice(Double price, Integer Type) {
-        Double temp = price;
-        if (randomInt(100) == 1 && Type == 3) {
-            temp = 0.0;
-        }
-
-        return temp;
-
-    }
-
-    public Integer getSizeOfList() {
-        return listOfProject.size();
-    }
-
-    public Project getAProject(Integer Option) {
-        return listOfProject.get(Option);
-    }
-
-    public void removeFromList() {
-        listOfProject.clear();
-    }
-
-    public SAD[] fromProjectToSADtab(Project project) {
-        return project.listSADtab;
+    public boolean getPayed(Project project) {
+        return project.payed;
     }
 
     public boolean parseSkills(Project project, String[] Tab) {
@@ -323,12 +302,62 @@ public class Project extends CreateRandom {
         return sad.parseSkills(tab, Tab);
     }
 
-    public Project setNewHours(Project project) {
+    public boolean status(Project project) {
+        return project.isFinished;
+    }
 
+    public Double getAmount_Of_Penalty(Project project) {
+        return project.amount_Of_Penalty;
+    }
+
+    public Double getPrice(Project project) {
+        return project.realPrice;
+    }
+
+    public Double getRealPrice(Double price, Integer Type) {
+        Double temp = price;
+        if (randomInt(100) == 1 && Type == 3) {
+            temp = 0.0;
+        }
+        return temp;
+    }
+
+    public SAD[] fromProjectToSADtab(Project project) {
+        return project.listSADtab;
+    }
+
+    public Integer getClientPayDay(Integer days, Integer Type) {
+        Integer value = days;
+        if (randomInt(100) <= 30 && (Type == 1 || Type == 3)) {
+            value = value + 5;
+        }
+        if (randomInt(100) <= 5 && Type == 3) {
+            value = value + 20;
+        }
+        return value;
+    }
+
+    public Integer getSizeOfList() {
+        return listOfProject.size();
+    }
+
+    public Integer checkProjectStatusSkills(Project project) {
+        SAD[] tab = fromProjectToSADtab(project);
+        return sad.checkStatus(tab);
+    }
+
+    public Integer getRequiredTestDays(Project project) {
+        return project.requiredTestDays;
+    }
+
+    public Project getAProject(Integer Option) {
+        return listOfProject.get(Option);
+    }
+
+    public Project setNewHours(Project project) {
         SAD[] tab = fromProjectToSADtab(project);
         project.listSADtab = sad.workDay(tab);
         return project;
-
     }
 
     public Project setNewTestingHours(Project project) {
@@ -336,28 +365,51 @@ public class Project extends CreateRandom {
         return project;
     }
 
-    public Integer checkProjectStatusSkills(Project project) {
-        SAD[] tab = fromProjectToSADtab(project);
-        return sad.checkStatus(tab);
-
+    public Project changeStatus(Project project) {
+        project.isFinished = true;
+        return project;
     }
 
-    public Integer getRequiredTestDays(Project project) {
-        return project.requiredTestDays;
+    public Project payed(Project project) {
+        project.payed = true;
+        return project;
     }
 
+    public LocalDate getRealDateOfCommissioning(LocalDate date) {
+        return date.plusDays(5);
+    }
+
+    public Project dontMoneyForU(Project project) {
+        if (project.iGotMoney == false) {
+            project.realDateOfCommissioning.plusYears(1000000000);
+            project.payDay.plusYears(1000000000);
+            project.realPayDay.plusYears(1000000000);
+            project.dateOfCommissioning.plusYears(1000000000);
+
+        }
+        return project;
+    }
+
+    public LocalDate getDateOfCommissioning(Project project) {
+        return project.realDateOfCommissioning;
+    }
+
+    public LocalDate getClientPayDay(Project project) {
+        return project.realPayDay;
+    }
 
     @Override
     public String toString() {
-        return "\nname='" + name + '\'' +
-                ", \nnameClient='" + nameClient + '\'' +
-                ", \nListSkillAndDaystab=" + Arrays.toString(listSADtab) +
-                ", \nprice=" + price +
-                ", \namount_Of_Penalty per day=" + amount_Of_Penalty +
-                ", \ncomplexity='" + complexity + '\'' +
-                ", \npayDay=" + payDay + ", \nrequiredTestDays=" + requiredTestDays +
-                ", \nrealPrice=" + realPrice +
-                ", \nDate Of Comissioing=" + dateOfCommissioning;
+        return "Project{" +
+                "name='" + name + '\'' +
+                ", nameClient='" + nameClient + '\'' +
+                ", Skills to this project: " + Arrays.toString(listSADtab) +
+                ", price=" + price +
+                ", amount_Of_Penalty=" + amount_Of_Penalty +
+                ", complexity='" + complexity + '\'' +
+                ", payDay=" + payDay +
+                ", requiredTestDays=" + requiredTestDays +
+                ", dateOfCommissioning=" + dateOfCommissioning;
 
     }
 }

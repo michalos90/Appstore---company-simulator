@@ -101,7 +101,7 @@ public class SAD extends CreateRandom {
         String[] tempStrintab = stringTab(fromSkillAndDaysTabToString(tab));
         Integer size = fromSkillAndDaysTabToString(tab).size();
         System.out.println("On What Technology u will work? type form 0");
-        Integer tempOption = SeciurityInPutInt(size - 1);
+        Integer tempOption = seciurityInPutInt(size - 1);
         tempInttab[tempOption]--;
         return returnToSADtab(tempInttab, tempStrintab, size);
     }
@@ -110,7 +110,6 @@ public class SAD extends CreateRandom {
         Integer[] tempInttab = IntTab(fromSkillAndDaysTabToString(tab));
         String[] tempStrintab = stringTab(fromSkillAndDaysTabToString(tab));
         Integer size = fromSkillAndDaysTabToString(tab).size();
-
         Integer allHours = 0;
         for (int i = 0; i < size; i++) {
             if (tempInttab[i] == 0) {
@@ -121,7 +120,6 @@ public class SAD extends CreateRandom {
             allHours = allHours + tempInttab[i];
         }
         return allHours;
-
     }
 
     public SAD[] returnToSADtab(Integer[] itab, String[] stab, Integer size) {

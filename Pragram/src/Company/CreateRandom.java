@@ -228,7 +228,7 @@ public class CreateRandom {
         return value;
     }
 
-    public Integer SeciurityInPutInt(int max) {
+    public Integer seciurityInPutInt(int max) {
         Integer number;
         do {
             System.out.println("Enter a number between 0 and " + max);

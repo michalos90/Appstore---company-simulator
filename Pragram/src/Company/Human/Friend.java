@@ -27,12 +27,6 @@ public class Friend extends Programer {
         }
     }
 
-    public void showFriend() {
-        for (Friend item : friendList) {
-            System.out.println(item);
-        }
-    }
-
     public List<Friend> getFriendList() {
         return friendList;
     }
@@ -44,14 +38,11 @@ public class Friend extends Programer {
                 "\n skills=" + Arrays.toString(skills) +
                 "\nType=" + type + "\nChose by type, type 0 is the best most expensive, 1 worst but not that expensive as 0 , 2 the worst but also the cheapest";
     }
-
-    public Friend getFriend(int number) {
-        return friendList.get(number);
-    }
-
-    public String[] getSkills(Friend friend) {
+        public String[] getSkills(Friend friend) {
         return friend.skills;
     }
+
+
 }
 
 
