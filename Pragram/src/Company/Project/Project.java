@@ -31,6 +31,8 @@ public class Project extends CreateRandom {
     boolean payed;
     Client client = new Client();
     SAD sad = new SAD();
+    boolean playerWorking;
+    boolean bigProject;
 
     public Project(String nName,
                    String nNameClient,
@@ -49,7 +51,9 @@ public class Project extends CreateRandom {
                    boolean nIsFinished,
                    boolean nIGotMoney,
                    boolean nPayed,
-                   LocalDate nRealDateOfCommissioning
+                   LocalDate nRealDateOfCommissioning,
+                   boolean nPlayerWorking,
+                   boolean nBigProject
 
     ) {
         this.name = nName;
@@ -71,6 +75,8 @@ public class Project extends CreateRandom {
         this.iGotMoney = nIGotMoney;
         this.payed = nPayed;
         this.realDateOfCommissioning = nRealDateOfCommissioning;
+        this.playerWorking=nPlayerWorking;
+        this.bigProject=nBigProject;
     }
 
     List<Project> listOfProject = new LinkedList<>();
@@ -82,22 +88,23 @@ public class Project extends CreateRandom {
         client.checkClientList();
         sad.createSkillAndDaysList(skills, days);
         Integer number = randomInt(33);
-        Integer tempInt = sad.getDaysFromList() - sad.getDaysFromList() * randomInt(25) / 100;
-        LocalDate PayDay = acctualDay.plusDays(tempInt);
-        LocalDate RealPayDay = acctualDay.plusDays(getClientPayDay(tempInt, client.getTypeFromList(number)));
+        Integer workingDays = sad.getDaysFromList() - sad.getDaysFromList() * randomInt(25) / 100;
+        LocalDate PayDay = acctualDay.plusDays(workingDays);
+        LocalDate RealPayDay = acctualDay.plusDays(getClientPayDay(workingDays, client.getTypeFromList(number)));
         boolean Pently = chance(client.getTypeFromList(number));
         Integer TypeClient = client.getTypeFromList(number);
         String ClientName = client.getNameClientFromList(number);
         String Complexity = setComplexityInList(sad.copyList());
-        Integer RequiredTestDays = tempInt / 3;
+        Integer RequiredTestDays = workingDays / 3;
         Double Price = sad.setPriceOnList() + (RequiredTestDays * 450);//+
         Double RealPrice = getRealPrice(Price, TypeClient);
         Double ValueOfPently = RealPrice * randomInt(5) / 100;
-        LocalDate DateOfCommissioning = acctualDay.plusDays((tempInt / 5) * 7);
-        SAD[] TempTab = sad.returSkillAndDays();
-        boolean TempBool = iGotMoney(TypeClient);
+        LocalDate DateOfCommissioning = acctualDay.plusDays((workingDays / 5) * 7);
+        SAD[] skillsTab = sad.returSkillAndDays();
+        boolean iGotMoneyFromClient = iGotMoney(TypeClient);
         LocalDate RealDateOfCommissioning = getRealDateOfCommissioning(DateOfCommissioning);
-
+        boolean isBig=false;
+        if(workingDays>100)isBig=true;
 
         listOfProject.add(new Project(generateProjectName(),
                 ClientName,
@@ -106,7 +113,7 @@ public class Project extends CreateRandom {
                 number,
                 ValueOfPently,
                 PayDay,
-                TempTab,
+                skillsTab,
                 TypeClient,
                 RealPayDay,
                 Pently,
@@ -114,9 +121,11 @@ public class Project extends CreateRandom {
                 RequiredTestDays,
                 DateOfCommissioning,
                 false,
-                TempBool,
+                iGotMoneyFromClient,
                 false,
-                RealDateOfCommissioning));
+                RealDateOfCommissioning,
+                false,
+                isBig));
     }
 
     public String setComplexityInList(List<SAD> list) {
@@ -356,11 +365,20 @@ public class Project extends CreateRandom {
 
     public Project setNewHours(Project project) {
         SAD[] tab = fromProjectToSADtab(project);
+        project.playerWorking=true;
         project.listSADtab = sad.workDay(tab);
         return project;
     }
 
+    public boolean getControlPoint(Project project){
+        if((project.playerWorking==false)&&(project.bigProject==true)){
+            return true ;
+        }
+      return false;
+    }
+
     public Project setNewTestingHours(Project project) {
+        project.playerWorking=true;
         project.requiredTestDays--;
         return project;
     }
@@ -409,7 +427,9 @@ public class Project extends CreateRandom {
                 ", complexity='" + complexity + '\'' +
                 ", payDay=" + payDay +
                 ", requiredTestDays=" + requiredTestDays +
-                ", dateOfCommissioning=" + dateOfCommissioning;
+                ", dateOfCommissioning=" + dateOfCommissioning+
+                ", Is big? " + bigProject+
+                ", player Working ?" + playerWorking;
 
     }
 }

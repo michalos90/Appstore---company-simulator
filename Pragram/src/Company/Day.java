@@ -14,6 +14,7 @@ public class Day extends CreateRandom {
     Player first = new Player("Michał", "Szyc");
     Project project = new Project();
     Friend friend = new Friend();
+    Integer controlPoint=3;
 
 
     public void firstDay() {
@@ -341,8 +342,13 @@ public class Day extends CreateRandom {
             if ((project.status(first.getMyProjectList().get(i)) == true) &&
                     (project.getClientPayDay(first.getMyProjectList().get(i)).isBefore(days) == true) &&
                     (project.getPayed(first.getMyProjectList().get(i)))) {
+                if(project.getControlPoint(first.getMyProjectList().get(i))==true){
+                    controlPoint++;
+
+                }
                 first.setCash(project.getPrice(first.getMyProjectList().get(i)));
                 first.updateDataProjectList(project.payed(first.getMyProjectList().get(i)), i);
+
             }
         }// this loop verify every day my project
         for (int i = 0; i < first.finishedProjects(); i++) {
@@ -353,6 +359,9 @@ public class Day extends CreateRandom {
             if ((project.status(first.getFinishedProject(i)) == true)
                     && (project.getClientPayDay(first.getFinishedProject(i)).isBefore(days) == true)
                     && (project.getPayed(first.getFinishedProject(i)) == false)) {
+                if(project.getControlPoint(first.getFinishedProject(i))==true){
+                    controlPoint++;
+                }
                 first.setCash(project.getPrice(first.getFinishedProject(i)));
                 first.updateFinishedProject(project.payed(first.getFinishedProject(i)), i);
             }
@@ -365,6 +374,9 @@ public class Day extends CreateRandom {
             if ((project.status(first.getProjectsGivedToFriendst().get(i)) == true) &&
                     (project.getClientPayDay(first.getProjectsGivedToFriendst().get(i)).isBefore(days) == true) &&
                     (project.getPayed(first.getProjectsGivedToFriendst().get(i)))) {
+                if(project.getControlPoint(first.getProjectsGivedToFriendst().get(i))==true){
+                    controlPoint++;
+                }
                 first.setCash(project.getPrice(first.getProjectsGivedToFriendst().get(i)) / 10);
                 first.updateDataProjectList(project.payed(first.getProjectsGivedToFriendst().get(i)), i);
             }
@@ -438,8 +450,15 @@ public class Day extends CreateRandom {
             zus = 2;
             first.payForMonth();
         }
+
         days = days.plusDays(1);
         playedDays++;
+        if(controlPoint>=3)//
+        {
+            for(;;){
+                System.out.println("U win This Game");
+            }
+        }
     }
 }
 
