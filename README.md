@@ -1,6 +1,6 @@
 Appstore --- company-simulator
 
-It is a console game in which we play the role of a programmer who creates his own team but starts alone at the beginning.
+It is a console game simulator in which we play the role of a programmer who creates his own team but starts alone at the beginning.
 
 The game is not to bankrupt yourself and the company that you will own sooner or later
 
