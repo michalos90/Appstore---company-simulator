@@ -1,15 +1,14 @@
-Appstore---company-simulator 
-Jest to gra konsolowa w której wcielamy się w programistę który tworzy własny zespół lecz na początku startuje sam 
-gra polega na tym by nie doprowadzić do bankructwa siebie oraz firmy którą prędzej czy później będziesz właścicielem 
-Opcje jakie gracz ma na start to:
-1. podpisanie projektu, na początku są to małe projekty lecz z czasem projekty te będą coraz wieksze i większe 
-2. szukać clientów, na początku nic nie przychodzi odrazu więc czasami trzeba poszukać ludzi u, których można zarobić
-3. programować, na początku jest to jedyne co możemy robić.
-4. testować aplikację pod względem błędów. jako że nie chcemy by nasza aplikacja zawierała będy to trzeba ją testować
-5. oddać projekt klientowi 
-6. zatrudnić pracownika, jako że potem pracujemy nad coraz to większymi projektami to będziemy potrzebować coraz więcej ludzi.
-7. zwolnić pracownika, czasami nie wszyscy są nam potrzebni
-8. rozliczenie z zusem, jak każda działalność niestety papierkowa robota nie ominie nas.
-9. oddać projekt koledze, np nie zdązymy sie wyrobić z danym projektem to możemy oddać go np koledze lecz ma to swoje plusy i minusy projekt może być niekompletny albo też przepłacimy
-10. zobaczyć nasze wszystkie listy projektów zrobionych aktywnych czy też pracowników 
-
+Appstore --- company-simulator
+It is a console game in which we play the role of a programmer who creates his own team but starts alone at the beginning.
+The game is not to bankrupt yourself and the company that you will own sooner or later
+The options that the player has to start are:
+1.signing the project, at the beginning they are small projects but with time these projects will be bigger and bigger
+2. look for clients, at the beginning nothing comes right away, so sometimes you have to look for people with whom you can earn money
+3. to program, at the beginning it is the only thing we can do.
+4. test the application for errors. as we do not want our application to contain bugs, it needs to be tested
+5. give the project back to the client
+6. hire an employee, as we work on larger and larger projects, we will need more and more people.
+7. dismiss an employee, sometimes we do not need all of us
+8. settlement with ZUS, like any other activity, unfortunately, we will not miss the paperwork.
+9. hand over the project to a colleague, e.g. we will not manage to make it with the project, we can give it to a colleague, but it has its pros and cons, the project may be incomplete or we will overpay
+10. View all our lists of projects made active or employees
